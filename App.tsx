@@ -16,7 +16,17 @@ import {
   Image,
   useColorScheme,
   View,
+  Dimensions,
 } from 'react-native';
+
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
 
 //이미지 엣셋
 //해더 이미지
@@ -37,6 +47,33 @@ import {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
+  const healthScore = {
+    labels: [ "02/24", "02/25", "02/26", "02/27"],
+    datasets: [
+      {
+        data: [ 80, 99, 43, 80]
+      }
+    ]
+  };
+  const amountActivity = [
+    {
+      name: '실외활동량',
+      population: 62,
+      color: "rgba(131, 167, 234, 1)",
+      legendFontColor: "#000000",
+      legendFontSize: 15,
+    },
+    {
+      name: '실내활동량',
+      population: 54,
+      color: "#F00",
+      legendFontColor: "#000000",
+      legendFontSize: 15,
+    },
+  ];
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -126,7 +163,54 @@ function App(): JSX.Element {
           <Text style={styles.purpleBoxText}>8시간 20분으로 매우 길어요.</Text>
         </View>
         <View style={styles.lightblueBox}>
-
+          <Text style={{fontSize: 15, fontWeight: 'bold', marginBottom: 10}}>오늘의 건강점수는 80점으로 양호하며,</Text>
+          <Text style={{fontSize: 15, fontWeight: 'bold', marginBottom: 10}}>70대 여성 평균 점수보다 10점 높습니다.</Text>
+          <BarChart
+            style={styles.graphStyle}
+            data={healthScore}
+            width={windowWidth * 0.75} // from react-native
+            height={220}
+            //yAxisLabel=""
+            chartConfig={{
+              backgroundColor: "#e26a00",
+              backgroundGradientFrom: "#fb8c00",
+              backgroundGradientTo: "#ffa726",
+              decimalPlaces: 0, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16
+              },
+              propsForDots: {
+                r: "1",
+                strokeWidth: "1",
+                stroke: "#ffa726"
+              }
+            }}
+            verticalLabelRotation={10}
+            barPercentage={0.5}  // Adjust this value between 0 and 1
+            barSpace={2}  // Adjust this value based on your preference
+          />
+          <PieChart
+            data={amountActivity}
+            width={windowWidth * 0.75}
+            height={300}
+            chartConfig={{
+              backgroundGradientFrom: "#1E2923",
+              backgroundGradientFromOpacity: 0,
+              backgroundGradientTo: "#08130D",
+              backgroundGradientToOpacity: 0.5,
+              color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+              strokeWidth: 3,
+              barPercentage: 0.5,
+              useShadowColorFromDataset: false,
+            }}
+            accessor={"population"}
+            backgroundColor={"transparent"}
+            paddingLeft={-10}
+            center={[60, 20]}
+            absolute
+          />
         </View>
         <View style={styles.purpleBox3}>
           <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 10}}>실외 활동 정보</Text>
@@ -147,7 +231,7 @@ function App(): JSX.Element {
           <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>오늘의 추천 장소</Text>
           <View style={{marginTop: 10, marginBottom: 10}}>
             <View style={{flex: 1}}>
-              <Image source={require('./assets/place_1.png')} />
+              <Image opacity={0.75} source={require('./assets/place_1.png')} />
               <View style={styles.overlappingPicNtext}>
                 <Text style={{fontSize: 28, fontWeight: 'bold', color: 'white', marginTop: 30, marginBottom: 30}}>
                   수영 사적공원
@@ -155,24 +239,28 @@ function App(): JSX.Element {
                 <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white'}}>
                   걷기 15분
                 </Text>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'blue'}}>
+                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>
                   난이도 중 ★★☆
-                </Text>
+                </Text>                
+              </View>
+              <View style={styles.overlappingPicNtext2}>
                 <Text style={{fontSize: 16, fontWeight: 'bold', color: 'blue'}}>
                   864m, 720걸음
                 </Text>
-              </View>
+              </View>              
             </View>
           </View>
           <View style={{marginTop: 10, marginBottom: 10}}>
             <View style={{flex: 1}}>
-              <Image source={require('./assets/place_2.png')} />
+              <Image opacity={0.75} source={require('./assets/place_2.png')} />
               <View style={styles.overlappingPicNtext}>
                 <Text style={{fontSize: 28, fontWeight: 'bold', color: 'white', marginTop: 30, marginBottom: 30}}>망미 골목투어</Text>
                 <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white'}}>걷기 20분</Text>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'red'}}>난이도 중 ★★☆</Text>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'red'}}>564m, 340걸음</Text>
+                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>난이도 중 ★★☆</Text>                
               </View>
+              <View style={styles.overlappingPicNtext2}>
+                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'red'}}>564m, 340걸음</Text>
+              </View>              
             </View>
           </View>
         </View>
@@ -325,7 +413,6 @@ const styles = StyleSheet.create({
     marginRight: 30,
     marginLeft: 30,
     borderWidth: 1,
-    height: 150,
     borderColor: '#a2aeff',
     borderRadius: 20,
   },
@@ -372,6 +459,21 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  overlappingPicNtext2: {
+    position: 'absolute',
+    flex: 1,
+    bottom: 10, // Adjust these values to control the overlap
+    left: 10,
+    width: '100%',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+  },
+  graphStyle: {
+    marginVertical: 0,
+    borderRadius: 16,
+    padding: 0,
+    backgroundColor: '#f7f7f7'
   },
 });
 
