@@ -150,22 +150,22 @@ function App(): JSX.Element {
           </View>
         </View>
         <View style={styles.purpleBox}>
-          <View>
-            <Text>취침시간</Text>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>취침시간</Text>
             <Image source={require('./assets/half-moon.png')} />
-            <Text>22시10분</Text>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>22시10분</Text>
           </View>
           <View style={styles.diviLine} />
-          <View>
-            <Text>기상시간</Text>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>기상시간</Text>
             <Image source={require('./assets/cloud_sun.png')} />
-            <Text>6시30분</Text>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>6시30분</Text>
           </View>
           <View style={styles.diviLine} />
-          <View>
-            <Text>수면시간</Text>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>수면시간</Text>
             <Image source={require('./assets/bed.png')} />
-            <Text>8시간 20분</Text>
+            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>8시간 20분</Text>
           </View>
         </View>
         <View style={styles.purpleBox2}>
