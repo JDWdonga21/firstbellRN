@@ -37,6 +37,8 @@ import Headerimg from './assets/header_img.svg';
 import Heart from './assets/heart.svg';
 // 전화기
 import Call from './assets/call.svg';
+// 달별
+import Moonhalfs from './assets/moon_half.svg'
 
 import {
   Colors,
@@ -49,15 +51,16 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
-
+  //차트 건강점수 데이터
   const healthScore = {
-    labels: [ "02/24", "02/25", "02/26", "02/27"],
+    labels: ["02/24", "02/25", "02/26", "02/27"],
     datasets: [
       {
-        data: [ 80, 99, 43, 80]
-      }
-    ]
+        data: [80, 99, 43, 80],
+      },
+    ],
   };
+  //차트 실내,외활동량 데이터
   const amountActivity = [
     {
       name: '실외활동량',
@@ -69,7 +72,7 @@ function App(): JSX.Element {
     {
       name: '실내활동량',
       population: 54,
-      color: "#F00",
+      color: "#ff0000",
       legendFontColor: "#000000",
       legendFontSize: 15,
     },
@@ -88,6 +91,7 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
+        {/* header */}
         <View style={{flexDirection: 'column', flex: 1}}>
           <AppHeaders />
           <View style={styles.overlappingSVG}>
@@ -117,13 +121,23 @@ function App(): JSX.Element {
             <Text style={styles.locationWeather}>현재기온 12°</Text>
           </View>
         </View>
+        {/* body */}
         <View style={styles.pinkBox}>
           <View style={{flex: 4, justifyContent: 'center'}}>
             <Text style={styles.pinkBoxText1}>8월 21일 (월) 오늘의 상태는</Text>
             <Text style={styles.pinkBoxText1}>양호한 상태입니다.</Text>
           </View>
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-            <Heart />
+          <View style={{flex: 1}}>
+            <View style={{flex: 0.5}} />
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{position: 'absolute', flex: 1, top: 0, left: 0}}>
+                <Heart />
+              </View>
+              <View style={{position: 'absolute', flex: 1, top: 0, left: 0}}>
+                <Text style={{fontSize: 28, color: '#ff73a9', marginLeft: 10, textAlign: 'center', fontWeight: 'bold'}}>65</Text>
+              </View>
+            </View>
+            <View style={{flex: 0.5}} />
           </View>
         </View>
         <View style={styles.pinkBox2}>
@@ -155,16 +169,30 @@ function App(): JSX.Element {
           </View>
         </View>
         <View style={styles.purpleBox2}>
-          <Text style={styles.purpleBoxText}>김광자님은 오늘 하루</Text>
-          <Text style={styles.purpleBoxText}>TV를 5시간 20분 시청하셨어요.</Text>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1}}>
+              <Image source={require('./assets/media_play.png')} />
+            </View>
+            <View style={{flex: 7}}>
+              <Text style={styles.purpleBoxText}>김광자님은 오늘 하루</Text>
+              <Text style={styles.purpleBoxText}>TV를 5시간 20분 시청하셨어요.</Text>
+            </View>
+          </View>
         </View>
         <View style={styles.pinkBox3}>
-          <Text style={styles.purpleBoxText}>김광자님은 지난 밤 수면시간은</Text>
-          <Text style={styles.purpleBoxText}>8시간 20분으로 매우 길어요.</Text>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1}}>
+              <Moonhalfs />
+            </View>
+            <View style={{flex: 7}}>
+              <Text style={styles.purpleBoxText}>김광자님은 지난 밤 수면시간은</Text>
+              <Text style={styles.purpleBoxText}>8시간 20분으로 매우 길어요.</Text>
+            </View>
+          </View>
         </View>
         <View style={styles.lightblueBox}>
-          <Text style={{fontSize: 15, fontWeight: 'bold', marginBottom: 10}}>오늘의 건강점수는 80점으로 양호하며,</Text>
-          <Text style={{fontSize: 15, fontWeight: 'bold', marginBottom: 10}}>70대 여성 평균 점수보다 10점 높습니다.</Text>
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>오늘의 건강점수는 80점으로 양호하며,</Text>
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>70대 여성 평균 점수보다 10점 높습니다.</Text>
           <BarChart
             style={styles.graphStyle}
             data={healthScore}
@@ -188,8 +216,8 @@ function App(): JSX.Element {
               }
             }}
             verticalLabelRotation={10}
-            barPercentage={0.5}  // Adjust this value between 0 and 1
-            barSpace={2}  // Adjust this value based on your preference
+            barPercentage={0.5} // Adjust this value between 0 and 1
+            barSpace={2} // Adjust this value based on your preference
           />
           <PieChart
             data={amountActivity}
@@ -230,8 +258,8 @@ function App(): JSX.Element {
           <Text style={{fontSize: 18, marginBottom: 10}}>김광자님의 활동 패턴을 기반</Text>
           <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>오늘의 추천 장소</Text>
           <View style={{marginTop: 10, marginBottom: 10}}>
-            <View style={{flex: 1}}>
-              <Image opacity={0.75} source={require('./assets/place_1.png')} />
+            <View style={{flex: 1, backgroundColor: 'black'}}>
+              <Image opacity={0.5} source={require('./assets/place_1.png')} />
               <View style={styles.overlappingPicNtext}>
                 <Text style={{fontSize: 28, fontWeight: 'bold', color: 'white', marginTop: 30, marginBottom: 30}}>
                   수영 사적공원
@@ -239,31 +267,32 @@ function App(): JSX.Element {
                 <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white'}}>
                   걷기 15분
                 </Text>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>
                   난이도 중 ★★☆
-                </Text>                
+                </Text>
               </View>
               <View style={styles.overlappingPicNtext2}>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'blue'}}>
+                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>
                   864m, 720걸음
                 </Text>
-              </View>              
+              </View>
             </View>
           </View>
           <View style={{marginTop: 10, marginBottom: 10}}>
-            <View style={{flex: 1}}>
-              <Image opacity={0.75} source={require('./assets/place_2.png')} />
+            <View style={{flex: 1, backgroundColor: 'black'}}>
+              <Image opacity={0.5} source={require('./assets/place_2.png')} />
               <View style={styles.overlappingPicNtext}>
                 <Text style={{fontSize: 28, fontWeight: 'bold', color: 'white', marginTop: 30, marginBottom: 30}}>망미 골목투어</Text>
                 <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white'}}>걷기 20분</Text>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>난이도 중 ★★☆</Text>                
+                <Text style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>난이도 중 ★★☆</Text>
               </View>
               <View style={styles.overlappingPicNtext2}>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'red'}}>564m, 340걸음</Text>
-              </View>              
+                <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>564m, 340걸음</Text>
+              </View>
             </View>
           </View>
         </View>
+        {/* footer */}
         <View style={{marginRight: 30, marginLeft: 30, margin: 20, padding: 30}}>
           <View style={{flexDirection: 'row'}}>
             <View style={styles.oneLineRadius2}>
@@ -473,7 +502,7 @@ const styles = StyleSheet.create({
     marginVertical: 0,
     borderRadius: 16,
     padding: 0,
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f7f7f7',
   },
 });
 
