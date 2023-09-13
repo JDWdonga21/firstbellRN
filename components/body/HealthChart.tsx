@@ -50,8 +50,8 @@ const HealthChart = ({
   const windowHeight = Dimensions.get('window').height;
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>오늘의 건강점수는 80점으로 양호하며,</Text>
-            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>70대 여성 평균 점수보다 10점 높습니다.</Text>
+            <Text style={styles.textStyle}>오늘의 건강점수는 80점으로 양호하며,</Text>
+            <Text style={styles.textStyle}>70대 여성 평균 점수보다 10점 높습니다.</Text>
             <BarChart
                 style={styles.graphStyle}
                 data={healthScore}
@@ -117,6 +117,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 0,
     backgroundColor: '#f7f7f7',
+  },
+  textStyle: {
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    marginBottom: 10, 
+    textAlign: 'center',
   },
 });
 export default HealthChart

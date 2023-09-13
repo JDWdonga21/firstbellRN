@@ -9,6 +9,8 @@ import {
 import Situation1 from './Situation1';
 import Situation2 from './Situation2';
 import HealthChart from './HealthChart';
+import Location from './Location';
+import RecLocation from './RecLocation';
 
 const Body = ({
 
@@ -18,6 +20,8 @@ const Body = ({
             <Situation1 />
             <Situation2 />
             <HealthChart />
+            <Location />
+            <RecLocation />
         </View>
   );
 }
