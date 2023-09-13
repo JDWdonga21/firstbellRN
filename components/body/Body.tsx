@@ -8,6 +8,7 @@ import {
 
 import Situation1 from './Situation1';
 import Situation2 from './Situation2';
+import HealthChart from './HealthChart';
 
 const Body = ({
 
@@ -16,6 +17,7 @@ const Body = ({
         <View >
             <Situation1 />
             <Situation2 />
+            <HealthChart />
         </View>
   );
 }
