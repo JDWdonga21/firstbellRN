@@ -10,7 +10,7 @@ import {
 import Moonhalfs from '../../assets/moon_half.svg'
 
 const Situation2 = ({
-
+  name
 }) => {
     return(
         <View>
@@ -39,7 +39,7 @@ const Situation2 = ({
                     <Image source={require('../../assets/media_play.png')} />
                     </View>
                     <View style={{flex: 7}}>
-                    <Text style={styles.purpleBoxText}>김광자님은 오늘 하루</Text>
+                    <Text style={styles.purpleBoxText}>{name}님은 오늘 하루</Text>
                     <Text style={styles.purpleBoxText}>TV를 5시간 40분 시청하셨어요.</Text>
                     </View>
                 </View>
@@ -50,7 +50,7 @@ const Situation2 = ({
                     <Moonhalfs />
                     </View>
                     <View style={{flex: 7}}>
-                    <Text style={styles.purpleBoxText}>김광자님은 지난 밤 수면시간은</Text>
+                    <Text style={styles.purpleBoxText}>{name}님은 지난 밤 수면시간은</Text>
                     <Text style={styles.purpleBoxText}>8시간 25분으로 매우 길어요.</Text>
                     </View>
                 </View>

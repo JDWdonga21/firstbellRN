@@ -10,7 +10,7 @@ import AppHeaders from '../assets/header_background.svg';
 import Headerimg from '../assets/header_img.svg';
 
 const Header = ({
-
+  name
 }) => {
     return(
         <View style={{flexDirection: 'column', flex: 1}}>
@@ -21,7 +21,7 @@ const Header = ({
           <View style={styles.overlappingTest}>
             <View style={{flexDirection: 'column', flex: 1}}>
               <View style={{flex: 1}}>
-                <Text style={styles.nameText}>김광자님,</Text>
+                <Text style={styles.nameText}>{name}님,</Text>
                 <Text style={styles.sectionTitle}>오늘 기분은 어때요?</Text>
               </View>
               <View style={{flex: 1, flexDirection: 'row', marginTop: 30}}>

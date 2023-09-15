@@ -13,15 +13,15 @@ import Location from './Location';
 import RecLocation from './RecLocation';
 
 const Body = ({
-
+  name
 }) => {
     return(
         <View >
             <Situation1 />
-            <Situation2 />
+            <Situation2 name={name} />
             <HealthChart />
             <Location />
-            <RecLocation />
+            <RecLocation name={name} />
         </View>
   );
 }

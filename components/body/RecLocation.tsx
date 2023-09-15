@@ -8,12 +8,12 @@ import {
 } from 'react-native';
 
 const RecLocation = ({
-
+  name
 }) => {
     return(
         <View style={styles.container}>
             <View>
-                <Text style={{fontSize: 18, marginBottom: 10}}>김광자님의 활동 패턴을 기반</Text>
+                <Text style={{fontSize: 18, marginBottom: 10}}>{name}님의 활동 패턴을 기반</Text>
                 <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>오늘의 추천 장소</Text>
                 <View style={{marginTop: 10, marginBottom: 10}}>
                     <View style={{flex: 1, backgroundColor: 'black'}}>
