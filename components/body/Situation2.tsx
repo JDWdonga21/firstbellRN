@@ -12,54 +12,60 @@ import Moonhalfs from '../../assets/moon_half.svg'
 const Situation2 = ({
   name
 }) => {
-    return(
-        <View>
-            <View style={styles.purpleBox}>
-                <View style={{flex: 1, alignItems: 'center'}}>
-                    <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>취침시간</Text>
-                    <Image source={require('../../assets/half-moon.png')} />
-                    <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>22시10분</Text>
-                </View>
-                <View style={styles.diviLine} />
-                <View style={{flex: 1, alignItems: 'center'}}>
-                    <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>기상시간</Text>
-                    <Image source={require('../../assets/cloud_sun.png')} />
-                    <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>6시30분</Text>
-                </View>
-                <View style={styles.diviLine} />
-                <View style={{flex: 1, alignItems: 'center'}}>
-                    <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>수면시간</Text>
-                    <Image source={require('../../assets/bed.png')} />
-                    <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>8시간 20분</Text>
-                </View>
-            </View>
-            <View style={styles.purpleBox2}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={{flex: 1}}>
-                    <Image source={require('../../assets/media_play.png')} />
-                    </View>
-                    <View style={{flex: 7}}>
-                    <Text style={styles.purpleBoxText}>{name}님은 오늘 하루</Text>
-                    <Text style={styles.purpleBoxText}>TV를 5시간 40분 시청하셨어요.</Text>
-                    </View>
-                </View>
-            </View>
-            <View style={styles.pinkBox3}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={{flex: 1}}>
-                    <Moonhalfs />
-                    </View>
-                    <View style={{flex: 7}}>
-                    <Text style={styles.purpleBoxText}>{name}님은 지난 밤 수면시간은</Text>
-                    <Text style={styles.purpleBoxText}>8시간 25분으로 매우 길어요.</Text>
-                    </View>
-                </View>
-            </View>
+  return(
+    <View>
+      <View style={styles.purpleBox}>
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>취침시간</Text>
+          <Image source={require('../../assets/half-moon.png')} />
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>22시10분</Text>
         </View>
-    )
+        <View style={styles.diviLine} />
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>기상시간</Text>
+          <Image source={require('../../assets/cloud_sun.png')} />
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>6시30분</Text>
+        </View>
+        <View style={styles.diviLine} />
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>수면시간</Text>
+          <Image source={require('../../assets/bed.png')} />
+          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>8시간 20분</Text>
+        </View>
+      </View>
+      <View style={styles.purpleBox2}>
+        <View style={{flex: 1, flexDirection: 'row', alignContent: 'center'}}>
+          <View style={{flex: 2, marginTop: 5, alignItems: 'center'}}>
+            <Image source={require('../../assets/media_play.png')} />
+          </View>
+          <View style={{flex: 1}}/>
+          <View style={{flex: 20}}>
+            <View style={{marginLeft: 4}}>
+              <Text style={styles.purpleBoxText}>{name}님은 오늘 하루</Text>
+              <Text style={styles.purpleBoxTextBold}>TV를 5시간 40분 시청하셨어요.</Text>
+            </View>            
+          </View>
+        </View>
+      </View>
+      <View style={styles.pinkBox3}>
+        <View style={{flex: 1, flexDirection: 'row', alignContent: 'center'}}>
+          <View style={{flex: 2, marginTop: 5, alignItems: 'center'}}>
+            <Moonhalfs />
+          </View>
+          <View style={{flex: 1}} />
+          <View style={{flex: 20}}>
+            <View style={{marginLeft: 4}}>
+              <Text style={styles.purpleBoxText}>{name}님은 지난 밤 수면시간은</Text>
+              <Text style={styles.purpleBoxTextBold}>8시간 25분으로 매우 길어요.</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  )
 }
 const styles = StyleSheet.create({
-    purpleBox: {
+  purpleBox: {
     marginTop: 25,
     padding: 20,
     justifyContent: 'space-around',
@@ -95,7 +101,13 @@ const styles = StyleSheet.create({
   purpleBoxText: {
     fontSize: 18,
     color: 'white',
-    textAlign: 'center',
+    textAlign: 'left',
+  },
+  purpleBoxTextBold: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'left',
+    fontWeight: 'bold',
   },
   pinkBox3: {
     marginTop: 15,
