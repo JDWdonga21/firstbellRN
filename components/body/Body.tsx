@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   Image,
@@ -12,17 +12,18 @@ import HealthChart from './HealthChart';
 import Location from './Location';
 import RecLocation from './RecLocation';
 
-const Body = ({
-  name
-}) => {
+class Body extends Component {
+  render() {
+    const { name } = this.props;
     return(
-        <View >
-            <Situation1 />
-            <Situation2 name={name} />
-            <HealthChart />
-            <Location />
-            <RecLocation name={name} />
-        </View>
-  );
+      <View >
+        <Situation1 />
+        <Situation2 name={name} />
+        <HealthChart />
+        <Location />
+        <RecLocation name={name} />
+      </View>
+    );
+  }  
 }
 export default Body
