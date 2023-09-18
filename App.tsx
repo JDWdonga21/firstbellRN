@@ -151,7 +151,6 @@ function App(): JSX.Element {
             />
             <Text> {appTime} </Text>
           </View>
-          
           <Header name={name}/>
           {/* body */}
           <Body name={name} />

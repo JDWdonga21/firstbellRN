@@ -29,38 +29,48 @@ const Footer = ({
 
   return(
     <View style={styles.container}>
-      <TouchableOpacity onPress={handlePress}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles.oneLineRadius2}>
-            <Text style={styles.footerText}>위급상황 통화하기</Text>
+      <View style={{flex: 1}} />
+      <View style={{flex: 10}}>
+        <TouchableOpacity onPress={handlePress}>
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.oneLineRadius}>
+              <View style={{flex: 1}} />
+              <View style={{flex: 12}}>
+                <Text style={styles.footerText}>위급상황 통화하기</Text>
+              </View>
+              <View style={{flex: 1}} />
+            </View>
+            <View style={{flex: 1}}/>
+            <Call width={60} height={60} style={{flex: 1}} />
           </View>
-          <Call />
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
+      <View style={{flex: 1}} />
     </View>
   )    
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
     margin: 20,
     marginRight: 30,
     marginLeft: 30,
     padding: 30,
   },
-  oneLineRadius2: {
-    margin: 5,
-    marginBottom: 5,
-    padding: 2,
-    paddingStart: 10,
+  oneLineRadius: {
+    flexDirection: 'row',
+    flex: 12,
+    marginTop: 10,
+    marginBottom: 10,
+    alignItems: 'center',
     backgroundColor: 'white',
-    width: '85%',
     borderWidth: 2,
     borderColor: '#ff1515',
     borderRadius: 30,
   },
   footerText: {
-    fontSize: 22, 
+    fontSize: 18, 
     fontWeight: 'bold', 
     textAlign: 'center', 
     color: '#ff1515'

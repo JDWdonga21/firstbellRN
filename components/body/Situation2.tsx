@@ -10,7 +10,7 @@ import {
 import Moonhalfs from '../../assets/moon_half.svg'
 
 const Situation2 = ({
-  name
+  name,
 }) => {
   return(
     <View style={styles.container}>
