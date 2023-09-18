@@ -6,8 +6,8 @@ import {
   StyleSheet,
 } from 'react-native';
 //해더 이미지
-import AppHeaders from '../assets/header_background.svg';
-import Headerimg from '../assets/header_img.svg';
+import AppHeaders from '../../assets/header_background.svg';
+import Headerimg from '../../assets/header_img.svg';
 
 const Header = ({
   name
@@ -26,13 +26,17 @@ const Header = ({
               </View>
               <View style={{flex: 1, flexDirection: 'row', marginTop: 30}}>
                 <View style={styles.location}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image source={require('../assets/gps.png')} />
-                    <Text style={styles.locationWeather}>해운대구 우동</Text>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{marginTop: 5}}>
+                      <Image source={require('../../assets/gps.png')} />
+                    </View>                    
+                    <Text style={styles.locationWeather}> 해운대구 우동</Text>
                   </View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image source={require('../assets/rain.png')} />
-                    <Text style={styles.locationWeather}>외출 시 우산 챙겨 가세요!</Text>
+                  <View style={{flexDirection: 'row',  alignItems: 'center', marginTop: 5}}>
+                    <View style={{marginTop: 5}}>
+                      <Image source={require('../../assets/rain.png')} />
+                    </View>                    
+                    <Text style={styles.locationWeather}> 외출 시 우산 챙겨 가세요!</Text>
                   </View>
                 </View>
               </View>
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   locationWeather: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: '900',
   },
   overlappingSVG: {

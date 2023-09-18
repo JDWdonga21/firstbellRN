@@ -5,6 +5,7 @@
  * @format
  */
 
+import SegmentedControl from 'rn-segmented-control';
 import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -21,8 +22,12 @@ import {
   Button,
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { RootSiblingParent } from 'react-native-root-siblings';
+import Toast from 'react-native-root-toast';
+// import SegmentedControl from './SegmentedControl';
 
-import Header from './components/Header';
+import Header from './components/headers/Header';
+import RadioBtn from './components/headers/RadioBtn';
 import Footer from './components/Footer';
 import Body from './components/body/Body';
 
@@ -44,6 +49,7 @@ function App(): JSX.Element {
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [appDate, setAppDate] = useState("");
   const [appTime, setAppTime] = useState("");
+  const [tabIndex, setTabIndex] = React.useState(0);
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -71,49 +77,101 @@ function App(): JSX.Element {
     setAppTime(time.toLocaleTimeString());
     hideTimePicker();
   };
-
+  // Add a Toast on screen.
+  const showtoast = () => {
+   const toast = Toast.show(`안녕하세요. ${name}`, {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.TOP,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+      onShow: () => {
+          // calls on toast\`s appear animation start
+      },
+      onShown: () => {
+          // calls on toast\`s appear animation end.
+      },
+      onHide: () => {
+          // calls on toast\`s hide animation start.
+      },
+      onHidden: () => {
+          // calls on toast\`s hide animation end.
+      }
+    });
+    // You can manually hide the Toast, or it will automatically disappear after a `duration` ms timeout.
+    setTimeout(function () {
+        Toast.hide(toast);
+    }, 2000);
+  };
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <Button title="Show Date Picker" onPress={showDatePicker} />
-      <Button title="Show Time Picker" onPress={showTimePicker} />
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
-      <Text> {appDate} </Text>
-      <DateTimePickerModal
-        isVisible={isTimePickerVisible}
-        mode="time"
-        onConfirm={handleConfirm2}
-        onCancel={hideTimePicker}
-      />
-      <Text> {appTime} </Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setName}
-        value={name}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        {/* header */}
-        <Header name={name}/>
-        {/* body */}
-        <Body name={name} />
-        {/* footer */}
-        <Footer />
-      </ScrollView>
-    </SafeAreaView>
+    <RootSiblingParent>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />        
+        
+        {/* <View style={styles.container}>
+              <View style={styles.box}>
+                <SegmentedControl
+                  containerMargin={16}
+                  segments={['Label 1', 'Label 2']}
+                  onChange={(index) => setTabIndex(index)}
+                  currentIndex={tabIndex}
+                />
+              </View>
+            </View> */}
+        
+        <ScrollView
+          style={backgroundStyle}>
+          {/* header */}
+          <View style={{ zIndex: 1 }}>
+            <RadioBtn />
+            <TextInput
+              style={styles.input}
+              onChangeText={setName}
+              value={name}
+            />
+            <Button title="Show Date Picker" onPress={showDatePicker} />
+            <Button title="Show Time Picker" onPress={showTimePicker} />
+            <Button title="Show Toast" onPress={showtoast} />
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+            />
+            <Text> {appDate} </Text>
+            <DateTimePickerModal
+              isVisible={isTimePickerVisible}
+              mode="time"
+              onConfirm={handleConfirm2}
+              onCancel={hideTimePicker}
+            />
+            <Text> {appTime} </Text>
+          </View>
+          
+          <Header name={name}/>
+          {/* body */}
+          <Body name={name} />
+          {/* footer */}
+          <Footer />
+        </ScrollView>
+      </SafeAreaView>
+    </RootSiblingParent>    
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  box: {
+    marginHorizontal: 16,
+    marginVertical: 16,
+  },
   input: {
     height: 40,
     margin: 12,
