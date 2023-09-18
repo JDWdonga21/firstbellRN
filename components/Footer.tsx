@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   Text,
   View,
@@ -10,10 +10,8 @@ import {
 // 전화기
 import Call from '../assets/call.svg';
 
-const Footer = ({
-
-}) => {
-  const createTwoButtonAlert = () =>
+class Footer extends Component {
+  createTwoButtonAlert = () =>
     Alert.alert('위급상황 통화입니다.', '통화를 걸까요?', [
       {
         text: '취소',
@@ -22,32 +20,34 @@ const Footer = ({
       },
       {text: '통화', onPress: () => console.log('긴급 전화걸기')},
   ]);  
-  const handlePress = () => {
+  handlePress = () => {
     createTwoButtonAlert();
     console.log('위급상황 통화버튼 클릭');
   };
-
-  return(
-    <View style={styles.container}>
-      <View style={{flex: 1}} />
-      <View style={{flex: 10}}>
-        <TouchableOpacity onPress={handlePress}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={styles.oneLineRadius}>
-              <View style={{flex: 1}} />
-              <View style={{flex: 12}}>
-                <Text style={styles.footerText}>위급상황 통화하기</Text>
+  
+  render() {
+    return(
+      <View style={styles.container}>
+        <View style={{flex: 1}} />
+        <View style={{flex: 10}}>
+          <TouchableOpacity onPress={this.handlePress}>
+            <View style={{flexDirection: 'row'}}>
+              <View style={styles.oneLineRadius}>
+                <View style={{flex: 1}} />
+                <View style={{flex: 12}}>
+                  <Text style={styles.footerText}>위급상황 통화하기</Text>
+                </View>
+                <View style={{flex: 1}} />
               </View>
-              <View style={{flex: 1}} />
+              <View style={{flex: 1}}/>
+              <Call width={60} height={60} style={{flex: 1}} />
             </View>
-            <View style={{flex: 1}}/>
-            <Call width={60} height={60} style={{flex: 1}} />
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
+        <View style={{flex: 1}} />
       </View>
-      <View style={{flex: 1}} />
-    </View>
-  )    
+    );
+  }      
 }
 
 const styles = StyleSheet.create({

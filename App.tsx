@@ -126,31 +126,6 @@ function App(): JSX.Element {
         <ScrollView
           style={backgroundStyle}>
           {/* header */}
-          <View style={{ zIndex: 1 }}>
-            <RadioBtn />
-            <TextInput
-              style={styles.input}
-              onChangeText={setName}
-              value={name}
-            />
-            <Button title="Show Date Picker" onPress={showDatePicker} />
-            <Button title="Show Time Picker" onPress={showTimePicker} />
-            <Button title="Show Toast" onPress={showtoast} />
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-            <Text> {appDate} </Text>
-            <DateTimePickerModal
-              isVisible={isTimePickerVisible}
-              mode="time"
-              onConfirm={handleConfirm2}
-              onCancel={hideTimePicker}
-            />
-            <Text> {appTime} </Text>
-          </View>
           <Header name={name}/>
           {/* body */}
           <Body name={name} />
