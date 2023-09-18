@@ -13,24 +13,48 @@ const Situation2 = ({
   name
 }) => {
   return(
-    <View>
+    <View style={styles.container}>
       <View style={styles.purpleBox}>
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>취침시간</Text>
-          <Image source={require('../../assets/half-moon.png')} />
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>22시10분</Text>
+          <View style={{flex: 1}}>
+            <Text style={styles.timeText}>취침시간</Text>
+          </View>
+          <View style={{flex: 1, marginBottom: 10}}/>
+          <View style={{flex: 1}}>
+            <Image source={require('../../assets/half-moon.png')} />
+          </View>
+          <View style={{flex: 1, marginTop: 10}}/>
+          <View style={{flex: 1}}>
+            <Text style={styles.timeTextBold}>22시10분</Text>
+          </View>
         </View>
         <View style={styles.diviLine} />
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>기상시간</Text>
-          <Image source={require('../../assets/cloud_sun.png')} />
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>6시30분</Text>
+          <View style={{flex: 1}}>
+            <Text style={styles.timeText}>기상시간</Text>
+          </View>
+          <View style={{flex: 1, marginBottom: 10}}/>
+          <View style={{flex: 1}}>
+            <Image source={require('../../assets/cloud_sun.png')} />
+          </View>
+          <View style={{flex: 1, marginBottom: 10}}/>
+          <View style={{flex: 1}}>
+            <Text style={styles.timeTextBold}>6시30분</Text>
+          </View>
         </View>
         <View style={styles.diviLine} />
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>수면시간</Text>
-          <Image source={require('../../assets/bed.png')} />
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, textAlign: 'center'}}>8시간 20분</Text>
+          <View style={{flex: 1}}>
+            <Text style={styles.timeText}>수면시간</Text>
+          </View>
+          <View style={{flex: 1, marginBottom: 10}}/>
+          <View style={{flex: 1}}>
+            <Image source={require('../../assets/bed.png')} />
+          </View>
+          <View style={{flex: 1, marginBottom: 10}}/>
+          <View style={{flex: 1}}>
+            <Text style={styles.timeTextBold}>8시간 20분</Text>
+          </View>
         </View>
       </View>
       <View style={styles.purpleBox2}>
@@ -43,7 +67,7 @@ const Situation2 = ({
             <View style={{marginLeft: 4}}>
               <Text style={styles.purpleBoxText}>{name}님은 오늘 하루</Text>
               <Text style={styles.purpleBoxTextBold}>TV를 5시간 40분 시청하셨어요.</Text>
-            </View>            
+            </View>
           </View>
         </View>
       </View>
@@ -65,9 +89,12 @@ const Situation2 = ({
   )
 }
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   purpleBox: {
     marginTop: 25,
-    padding: 20,
+    padding: 10,
     justifyContent: 'space-around',
     flex: 1,
     flexDirection: 'row',
@@ -107,6 +134,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     textAlign: 'left',
+    fontWeight: 'bold',
+  },
+  timeText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  timeTextBold: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
     fontWeight: 'bold',
   },
   pinkBox3: {
