@@ -9,9 +9,12 @@ import {
 // 달별
 import Moonhalfs from '../../assets/moon_half.svg'
 
-class Situation2 extends Component {
+type SituationProps = {
+  name: string;
+};
+
+class Situation2 extends Component <SituationProps> {
   render(){
-    const { name } = this.props;
     return(
       <View style={styles.container}>
         <View style={styles.purpleBox}>
@@ -65,7 +68,7 @@ class Situation2 extends Component {
             <View style={{flex: 1}}/>
             <View style={{flex: 20}}>
               <View style={{marginLeft: 4}}>
-                <Text style={styles.purpleBoxText}>{name}님은 오늘 하루</Text>
+                <Text style={styles.purpleBoxText}>{this.props.name}님은 오늘 하루</Text>
                 <Text style={styles.purpleBoxTextBold}>TV를 5시간 40분 시청하셨어요.</Text>
               </View>
             </View>
@@ -79,7 +82,7 @@ class Situation2 extends Component {
             <View style={{flex: 1}} />
             <View style={{flex: 20}}>
               <View style={{marginLeft: 4}}>
-                <Text style={styles.purpleBoxText}>{name}님은 지난 밤 수면시간은</Text>
+                <Text style={styles.purpleBoxText}>{this.props.name}님은 지난 밤 수면시간은</Text>
                 <Text style={styles.purpleBoxTextBold}>8시간 25분으로 매우 길어요.</Text>
               </View>
             </View>
@@ -139,14 +142,12 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 16,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   timeTextBold: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   pinkBox3: {
     marginTop: 15,

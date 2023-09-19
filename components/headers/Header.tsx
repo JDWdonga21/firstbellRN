@@ -9,10 +9,12 @@ import {
 import AppHeaders from '../../assets/header_background.svg';
 import Headerimg from '../../assets/header_img.svg';
 
-class Header extends Component {
-  render() {
-    const { name } = this.props;
+type HeaderProps = {
+  name: string;
+};
 
+class Header extends Component<HeaderProps> {
+  render() {
     return(
       <View style={{flexDirection: 'column', flex: 1}}>
         <AppHeaders />
@@ -22,7 +24,7 @@ class Header extends Component {
         <View style={styles.overlappingTest}>
           <View style={{flexDirection: 'column', flex: 1}}>
             <View style={{flex: 1}}>
-              <Text style={styles.nameText}>{name}님,</Text>
+              <Text style={styles.nameText}>{this.props.name}님,</Text>
               <Text style={styles.sectionTitle}>오늘 기분은 어때요?</Text>
             </View>
             <View style={{flex: 1, flexDirection: 'row', marginTop: 30}}>

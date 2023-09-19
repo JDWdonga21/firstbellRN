@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
 } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import Toast from 'react-native-root-toast';
@@ -15,7 +14,6 @@ import Body from './components/body/Body';
 import Footer from './components/Footer';
 
 type AppState = {
-  isDarkMode: boolean,
   name: string,
 };
 
@@ -27,14 +25,29 @@ class App extends Component<{}, AppState> {
     };
   }
 
+  toastTimer = null as null | NodeJS.Timeout;
+
   showtoast = () => {
     const toast = Toast.show(`안녕하세요. ${this.state.name}`, {
       // ... same Toast configurations
     });
-    setTimeout(() => {
+
+    // Clear any existing timer before setting a new one
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
+
+    this.toastTimer = setTimeout(() => {
       Toast.hide(toast);
     }, 2000);
   };
+
+  // Clear the timer when the component unmounts
+  componentWillUnmount() {
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
+  }
 
   render() {
     return (
@@ -53,7 +66,20 @@ class App extends Component<{}, AppState> {
 }
 
 const styles = StyleSheet.create({
-  // ... same styles
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  box: {
+    marginHorizontal: 16,
+    marginVertical: 16,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
 });
 
 export default App;

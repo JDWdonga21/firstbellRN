@@ -12,16 +12,19 @@ import HealthChart from './HealthChart';
 import Location from './Location';
 import RecLocation from './RecLocation';
 
-class Body extends Component {
+type BodyProps = {
+  name: string;
+};
+
+class Body extends Component<BodyProps> {
   render() {
-    const { name } = this.props;
     return(
       <View >
         <Situation1 />
-        <Situation2 name={name} />
+        <Situation2 name={this.props.name} />
         <HealthChart />
         <Location />
-        <RecLocation name={name} />
+        <RecLocation name={this.props.name} />
       </View>
     );
   }  

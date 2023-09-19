@@ -44,8 +44,7 @@ import {
   ];
 class HealthChart extends Component {
   render(){
-    const windowWidth = Dimensions.get('window').width;
-    const windowHeight = Dimensions.get('window').height;
+    const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
     return (
       <View style={styles.container}>
         <Text style={styles.textStyle}>오늘의 건강점수는 80점으로 양호하며,</Text>
@@ -91,7 +90,7 @@ class HealthChart extends Component {
           }}
           accessor={"population"}
           backgroundColor={"transparent"}
-          paddingLeft={-10}
+          paddingLeft={"-10"}
           center={[60, 20]}
           absolute
         />

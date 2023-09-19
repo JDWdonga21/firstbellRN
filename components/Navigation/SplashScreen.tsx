@@ -1,23 +1,34 @@
 // SplashScreen.js
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { View, Image, StyleSheet, Dimensions, } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-
-
-const SplashScreen = ({ navigation }) => {
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('Main');
-    }, 3000); // 3초 후에 메인 페이지로 이동
-  }, [navigation]);
-
-  
-  return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/app_icon.png')} />
-    </View>
-  );
+type SplashScreenProps = {
+  navigation: StackNavigationProp<any, 'Splash'>; // Replace 'any' with your ParamList if you have one
 };
+class SplashScreen extends Component<SplashScreenProps> {
+  timeout = null as null | NodeJS.Timeout;
+  
+  componentDidMount() {
+    this.timeout = setTimeout(() => {
+      this.props.navigation.navigate('Main');
+    }, 3000); // 3초 후에 메인 페이지로 이동
+  }
+  componentWillUnmount(): void {
+    if(this.timeout != null){
+      clearTimeout(this.timeout);
+    }      
+  }
+
+  render() {
+    const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+    return (
+      <View style={styles.container}>        
+        <Image style = {{width: windowWidth * 0.9, height: windowWidth * 0.9}} source={require('../../assets/app_icon.png')} />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

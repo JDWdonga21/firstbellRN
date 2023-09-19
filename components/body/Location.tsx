@@ -57,21 +57,18 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 20, 
-    fontWeight: 'bold', 
     marginBottom: 10,
   },
   titleTextBold: {
     fontSize: 20, 
     fontWeight: 'bold', 
     marginBottom: 10,
-    fontWeight: 'bold',
     color: 'black',
   },
   textStyle: {
     fontSize: 22, 
     fontWeight: 'bold',
     marginBottom: 10,
-    fontWeight: 'bold',
     color: 'black',
   },
 });

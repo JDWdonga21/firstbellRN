@@ -7,14 +7,17 @@ import {
   Image,
 } from 'react-native';
 
-class RecLocation extends Component {
+type RecLocationProps = {
+  name: string;
+};
+
+class RecLocation extends Component <RecLocationProps> {
   render(){
-    const { name } = this.props;
     return(
       <View style={styles.container}>
         <View>
           <Text style={{fontSize: 20, marginBottom: 10}}>
-            {name}님의 활동 패턴을 기반
+            {this.props.name}님의 활동 패턴을 기반
           </Text>
           <Text style={{fontSize: 22, fontWeight: 'bold', marginBottom: 10}}>
             오늘의 추천 장소
