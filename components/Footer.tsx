@@ -11,15 +11,17 @@ import {
 import Call from '../assets/call.svg';
 
 class Footer extends Component {
-  createTwoButtonAlert = () =>
+  createTwoButtonAlert = () =>{
     Alert.alert('위급상황 통화입니다.', '통화를 걸까요?', [
-      {
-        text: '취소',
-        onPress: () => console.log('취소하기'),
-        style: 'cancel',
-      },
-      {text: '통화', onPress: () => console.log('긴급 전화걸기')},
-  ]);
+        {
+          text: '취소',
+          onPress: () => console.log('취소하기'),
+          style: 'cancel',
+        },
+        {text: '통화', onPress: () => console.log('긴급 전화걸기')},
+    ]);
+  }
+    
   handlePress = () => {
     this.createTwoButtonAlert();
     console.log('위급상황 통화버튼 클릭');

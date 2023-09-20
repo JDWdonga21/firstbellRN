@@ -4,6 +4,8 @@ import {
   Image,
   View,
   StyleSheet,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 // 하트
@@ -28,6 +30,16 @@ class Situation1 extends Component<SituationProps, thisSituation> {
       todayDate: this.props.todayDate,
       conditionCode: this.props.conditionCode,
     };
+  }
+  handlePress = () => {
+    Alert.alert('AI친구 입니다.', '이야기를 시작할까요?', [
+        {
+          text: '취소',
+          onPress: () => console.log('취소하기'),
+          style: 'cancel',
+        },
+        {text: '통화', onPress: () => console.log('AI 대화하기')},
+    ]);
   }
   render(){
     const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -58,8 +70,8 @@ class Situation1 extends Component<SituationProps, thisSituation> {
             </View>
             <View style={{flex: 0.5}} />
           </View>
-        </View>
-        <View style={styles.pinkBox2}>
+        </View>        
+        <View style={styles.pinkBox2}>          
           <View style={{flex: 4, justifyContent: 'center'}}>
             <Text style={styles.pinkBoxText2}>말동무가 필요하신가요?</Text>
             <View style={{marginTop: 10}}>
@@ -67,9 +79,11 @@ class Situation1 extends Component<SituationProps, thisSituation> {
             </View>
           </View>
           <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 20}}>
-            <Image source={require('../../assets/ai.png')} />
-          </View>
-        </View>
+            <TouchableOpacity onPress={this.handlePress}>
+              <Image source={require('../../assets/ai.png')} />
+            </TouchableOpacity>
+          </View>                    
+        </View>        
       </View>
     );
   }
