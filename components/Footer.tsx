@@ -19,9 +19,9 @@ class Footer extends Component {
         style: 'cancel',
       },
       {text: '통화', onPress: () => console.log('긴급 전화걸기')},
-  ]);  
+  ]);
   handlePress = () => {
-    createTwoButtonAlert();
+    this.createTwoButtonAlert();
     console.log('위급상황 통화버튼 클릭');
   };
   

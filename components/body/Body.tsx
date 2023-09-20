@@ -14,13 +14,20 @@ import RecLocation from './RecLocation';
 
 type BodyProps = {
   name: string;
+  healthScore: number;
+  todayDate: Date;
+  conditionCode: number;
 };
 
 class Body extends Component<BodyProps> {
   render() {
     return(
       <View >
-        <Situation1 />
+        <Situation1          
+          healthScore={this.props.healthScore}   
+          todayDate={this.props.todayDate}  
+          conditionCode={this.props.conditionCode}   
+        />
         <Situation2 name={this.props.name} />
         <HealthChart />
         <Location />

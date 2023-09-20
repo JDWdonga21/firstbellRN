@@ -9,15 +9,40 @@ import {
 // 하트
 import Heart from '../../assets/heart.svg';
 
-class Situation1 extends Component {
+type SituationProps = {
+  healthScore: number;
+  todayDate: Date;
+  conditionCode: number;
+}
+type thisSituation = {
+  healthScore: number,
+  todayDate: Date,
+  conditionCode: number,
+}
+
+class Situation1 extends Component<SituationProps, thisSituation> {
+  constructor(props: SituationProps) {
+    super(props);
+    this.state = {
+      healthScore: this.props.healthScore,
+      todayDate: this.props.todayDate,
+      conditionCode: this.props.conditionCode,
+    };
+  }
   render(){
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    const todayCondition = ['최상의', '양호한', '피곤한', '불쾌한', '위험한']
     return(
       <View>
         <View style={styles.pinkBox}>
           <View style={{flex: 4, justifyContent: 'center'}}>
-            <Text style={styles.pinkBoxText1}>8월 21일 (월) 오늘의 상태는</Text>
+            <Text style={styles.pinkBoxText1}>
+              {this.state.todayDate.getMonth() + 1}월 
+              {this.state.todayDate.getDate()}일 
+              ({days[this.state.todayDate.getDay()]}) 오늘의 상태는
+            </Text>
             <View style={{flexDirection: 'row', marginTop: 10}}>
-              <Text style={styles.pinkBoxText1Bold}>양호한</Text>
+              <Text style={styles.pinkBoxText1Bold}>{todayCondition[this.state.conditionCode]}</Text>
               <Text style={styles.pinkBoxText1Bold}> 상태입니다.</Text>
             </View>
           </View>
@@ -28,7 +53,7 @@ class Situation1 extends Component {
                 <Heart />
               </View>
               <View style={{position: 'absolute', flex: 1, top: 0, left: 0}}>
-                <Text style={{fontSize: 28, color: '#ff73a9', marginLeft: 10, textAlign: 'center', fontWeight: 'bold'}}>65</Text>
+                <Text style={{fontSize: 28, color: '#ff73a9', marginLeft: 10, textAlign: 'center', fontWeight: 'bold'}}>{this.state.healthScore}</Text>
               </View>
             </View>
             <View style={{flex: 0.5}} />

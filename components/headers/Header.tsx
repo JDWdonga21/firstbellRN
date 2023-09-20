@@ -11,6 +11,8 @@ import Headerimg from '../../assets/header_img.svg';
 
 type HeaderProps = {
   name: string;
+  address: string
+  temperatures: number;
 };
 
 class Header extends Component<HeaderProps> {
@@ -33,7 +35,7 @@ class Header extends Component<HeaderProps> {
                   <View style={{marginTop: 5}}>
                     <Image source={require('../../assets/gps.png')} />
                   </View>                    
-                  <Text style={styles.locationWeather}> 해운대구 우동</Text>
+                  <Text style={styles.locationWeather}> {this.props.address}</Text>
                 </View>
                 <View style={{flexDirection: 'row',  alignItems: 'center', marginTop: 5}}>
                   <View style={{marginTop: 5}}>
@@ -46,7 +48,7 @@ class Header extends Component<HeaderProps> {
           </View>
         </View>
         <View style={styles.Weather}>
-          <Text style={styles.locationWeather}>현재기온 12°</Text>
+          <Text style={styles.locationWeather}>현재기온 {this.props.temperatures}°</Text>
         </View>
       </View>
     );

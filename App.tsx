@@ -15,13 +15,24 @@ import Footer from './components/Footer';
 
 type AppState = {
   name: string,
+  address: string,
+  temperatures: number,
+  healthScore: number,
+  todayDate: Date,
+  conditionCode: number,
 };
 
 class App extends Component<{}, AppState> {
+  timer = null as null |  NodeJS.Timeout;
   constructor(props: {}) {
     super(props);
     this.state = {
       name: '이춘자',
+      address: '해운대구 수영강변대로',
+      temperatures: 25,
+      healthScore: 65,
+      todayDate: new Date(),
+      conditionCode: 1,
     };
   }
 
@@ -42,11 +53,22 @@ class App extends Component<{}, AppState> {
     }, 2000);
   };
 
+  componentDidMount() {
+    this.timer = setInterval(() => this.tick(), 1000);
+  }  
   // Clear the timer when the component unmounts
   componentWillUnmount() {
     if (this.toastTimer) {
       clearTimeout(this.toastTimer);
     }
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
+  tick() {
+    this.setState({
+      todayDate: new Date(),
+    });
   }
 
   render() {
@@ -55,8 +77,17 @@ class App extends Component<{}, AppState> {
         <SafeAreaView>
           <StatusBar />
           <ScrollView >
-            <Header name={this.state.name} />
-            <Body name={this.state.name} />
+            <Header 
+              name={this.state.name} 
+              address={this.state.address}
+              temperatures={this.state.temperatures}
+            />
+            <Body 
+              name={this.state.name} 
+              healthScore={this.state.healthScore}
+              todayDate = {this.state.todayDate}
+              conditionCode = {this.state.conditionCode}
+            />
             <Footer />
           </ScrollView>
         </SafeAreaView>
