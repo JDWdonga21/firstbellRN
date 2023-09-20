@@ -11,10 +11,61 @@ import Moonhalfs from '../../assets/moon_half.svg'
 
 type SituationProps = {
   name: string;
+  onBedtime: Date,
+  onWakeUptime: Date,
+  onSleeptimes: number,
+  onSleepmins: number,
+};
+type thisSituation = {
+  sleepingLengthCode: number,
 };
 
-class Situation2 extends Component <SituationProps> {
+class Situation2 extends Component <SituationProps, thisSituation> {
+  constructor(props: SituationProps) {
+    super(props);
+    this.state = {      
+      sleepingLengthCode: 0,
+    };
+  }
+  componentDidMount(): void {
+      this.sleepingLengthCheck();
+  }
+  componentDidUpdate(prevProps: SituationProps) {
+    if (prevProps.onSleepmins !== this.props.onSleepmins) {
+      this.sleepingLengthCheck();
+    }
+  }
+  sleepingLengthCheck = () => {
+    const sleepLen = (this.props.onSleeptimes * 60) + this.props.onSleepmins
+    if (sleepLen > 480) {
+      this.setState({
+        sleepingLengthCode: 0,
+      })
+    }
+    else if (sleepLen <= 480 && sleepLen > 360) {
+      this.setState({
+        sleepingLengthCode: 1,
+      })
+    }
+    else if (sleepLen <= 360 && sleepLen > 240) {
+      this.setState({
+        sleepingLengthCode: 2,
+      })
+    }
+    else if (sleepLen <= 240 && sleepLen > 180) {
+      this.setState({
+        sleepingLengthCode: 3,
+      })
+    }
+    else{
+      this.setState({
+        sleepingLengthCode: 4,
+      })
+    }
+  }
+
   render(){
+    const sleepingLength = ['매우 길어요', '적당해요', '조금 부족해요', '많이 부족해요', '위험한 수준이에요.']
     return(
       <View style={styles.container}>
         <View style={styles.purpleBox}>
@@ -28,7 +79,7 @@ class Situation2 extends Component <SituationProps> {
             </View>
             <View style={{flex: 1, marginTop: 10}}/>
             <View style={{flex: 1}}>
-              <Text style={styles.timeTextBold}>22시10분</Text>
+              <Text style={styles.timeTextBold}>{this.props.onBedtime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: undefined })}</Text>
             </View>
           </View>
           <View style={styles.diviLine} />
@@ -42,7 +93,7 @@ class Situation2 extends Component <SituationProps> {
             </View>
             <View style={{flex: 1, marginBottom: 10}}/>
             <View style={{flex: 1}}>
-              <Text style={styles.timeTextBold}>6시30분</Text>
+              <Text style={styles.timeTextBold}>{this.props.onWakeUptime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: undefined })}</Text>
             </View>
           </View>
           <View style={styles.diviLine} />
@@ -56,7 +107,7 @@ class Situation2 extends Component <SituationProps> {
             </View>
             <View style={{flex: 1, marginBottom: 10}}/>
             <View style={{flex: 1}}>
-              <Text style={styles.timeTextBold}>8시간 20분</Text>
+              <Text style={styles.timeTextBold}>{this.props.onSleeptimes.toString()}시간 {this.props.onSleepmins.toString()}분</Text>
             </View>
           </View>
         </View>
@@ -83,7 +134,7 @@ class Situation2 extends Component <SituationProps> {
             <View style={{flex: 20}}>
               <View style={{marginLeft: 4}}>
                 <Text style={styles.purpleBoxText}>{this.props.name}님은 지난 밤 수면시간은</Text>
-                <Text style={styles.purpleBoxTextBold}>8시간 25분으로 매우 길어요.</Text>
+                <Text style={styles.purpleBoxTextBold}>{this.props.onSleeptimes.toString()}시간 {this.props.onSleepmins.toString()}분으로 {sleepingLength[this.state.sleepingLengthCode]}.</Text>
               </View>
             </View>
           </View>

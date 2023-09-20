@@ -20,6 +20,12 @@ type AppState = {
   healthScore: number,
   todayDate: Date,
   conditionCode: number,
+  watchTVtime: number,
+  onBedtime: Date,
+  onWakeUptime: Date,
+  onSleeptime: number,
+  onSleeptimes: number,
+  onSleepmins: number,
 };
 
 class App extends Component<{}, AppState> {
@@ -27,12 +33,22 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
+      // All
       name: '이춘자',
+      //Header
       address: '해운대구 수영강변대로',
       temperatures: 25,
+      //Situation1
       healthScore: 65,
+      //Situation2
       todayDate: new Date(),
       conditionCode: 1,
+      watchTVtime: 0,
+      onBedtime: new Date(2023, 8, 19, 24, 0, 0),
+      onWakeUptime: new Date(2023, 8, 20, 5, 0, 0),
+      onSleeptime: 0,
+      onSleeptimes: 0,
+      onSleepmins: 0,      
     };
   }
 
@@ -66,9 +82,18 @@ class App extends Component<{}, AppState> {
     }
   }
   tick() {
+    const newTime = new Date();
+    //const sleepTime = this.state.onWakeUptime.getTime() - this.state.onBedtime.getTime();
+    const sleepTime = this.state.todayDate.getTime() - this.state.onBedtime.getTime();
+    const sleepHours = Math.floor(sleepTime / 3600000);
+    const sleepMins = Math.floor((sleepTime % 3600000) / 60000);
+
     this.setState({
-      todayDate: new Date(),
-    });
+      todayDate: newTime,
+      onSleeptime: sleepTime,
+      onSleeptimes: sleepHours,
+      onSleepmins: sleepMins,
+    });    
   }
 
   render() {
@@ -77,6 +102,7 @@ class App extends Component<{}, AppState> {
         <SafeAreaView>
           <StatusBar />
           <ScrollView >
+            <Text>{this.state.todayDate.toLocaleString()}</Text>
             <Header 
               name={this.state.name} 
               address={this.state.address}
@@ -87,6 +113,10 @@ class App extends Component<{}, AppState> {
               healthScore={this.state.healthScore}
               todayDate = {this.state.todayDate}
               conditionCode = {this.state.conditionCode}
+              onBedtime = {this.state.onBedtime}
+              onWakeUptime = {this.state.onWakeUptime}
+              onSleeptimes = {this.state.onSleeptimes}
+              onSleepmins = {this.state.onSleepmins}
             />
             <Footer />
           </ScrollView>
