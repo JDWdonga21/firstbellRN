@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   purpleBox: {
-    marginTop: 25,
+    marginTop: 10,
     padding: 10,
     justifyContent: 'space-around',
     flex: 1,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   purpleBox2: {
-    marginTop: 25,
+    marginTop: 10,
     padding: 20,
     flex: 1,
     backgroundColor: '#1f007a',
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   pinkBox3: {
-    marginTop: 15,
+    marginTop: 10,
     padding: 20,
     flex: 1,
     backgroundColor: '#ff4385',

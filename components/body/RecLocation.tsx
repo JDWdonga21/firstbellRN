@@ -56,7 +56,7 @@ class RecLocation extends Component <RecLocationProps, ThisRecLocation> {
           </Text>
           <View style={{marginTop: 10, marginBottom: 10}}>
             <View style={styles.imgStyle}>
-              <Image opacity={0.5} source={require('../../assets/place_1.png')} />
+              <Image style={{opacity : 0.5}}source={require('../../assets/place_1.png')} />
               <View style={styles.overlappingPicNtext}>
                 <Text style={{fontSize: 24, fontWeight: 'bold', color: 'white', marginTop: 30, marginBottom: 10}}>
                   {this.state.reLoca1}
@@ -77,7 +77,7 @@ class RecLocation extends Component <RecLocationProps, ThisRecLocation> {
           </View>
           <View style={{marginTop: 10, marginBottom: 10}}>
             <View style={styles.imgStyle}>
-              <Image opacity={0.5} source={require('../../assets/place_2.png')} />
+              <Image style={{opacity : 0.5}} source={require('../../assets/place_2.png')} />
               <View style={styles.overlappingPicNtext}>
                 <Text style={{fontSize: 24, fontWeight: 'bold', color: 'white', marginTop: 30, marginBottom: 10}}>
                   {this.state.reLoca2}
@@ -103,6 +103,7 @@ class RecLocation extends Component <RecLocationProps, ThisRecLocation> {
 }
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     marginRight: 30,
     marginLeft: 30,
     margin: 20

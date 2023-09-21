@@ -64,8 +64,10 @@ class Situation1 extends Component<SituationProps, thisSituation> {
               <View style={{position: 'absolute', flex: 1, top: 0, left: 0}}>
                 <Heart />
               </View>
-              <View style={{position: 'absolute', flex: 1, top: 0, left: 0}}>
-                <Text style={{fontSize: 28, color: '#ff73a9', marginLeft: 10, textAlign: 'center', fontWeight: 'bold'}}>{this.state.healthScore}</Text>
+              <View style={{flex: 1, position: 'absolute', flexDirection: 'column', top: 9, left: 10}}>
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                  <Text style={{fontSize: 24, color: '#ff73a9', textAlign: 'center', fontWeight: 'bold'}}>{this.state.healthScore}</Text>
+                </View>
               </View>
             </View>
             <View style={{flex: 0.5}} />

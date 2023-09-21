@@ -57,7 +57,7 @@ class Location extends Component <LocationProps, thisLocation> {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 25,
+    marginTop: 15,
     padding: 20,
     flex: 1,
     backgroundColor: '#c3aeff',
