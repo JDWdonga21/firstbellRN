@@ -116,9 +116,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderWidth: 1,
     borderColor: '#ff4385',
-    borderTopRightRadius: 20,
-    borderBottomStartRadius: 20,
-    borderBottomEndRadius: 20,
+    borderRadius: 20,
   },
   pinkBoxText1: {
     fontSize: 18,
