@@ -79,9 +79,9 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
   constructor(props: HealthChartProps) {
     super(props);
     this.state = {
-      healthScore: 65,
+      healthScore: 85,
       ages: 70,
-      averageHealthScore: 60,
+      averageHealthScore: 65,
       differenceValue: 0,
       keywordCode: 0
     };
@@ -107,7 +107,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
     }
   }  
   componentDidMount(): void {
-      this.doComparison()
+    this.doComparison()
   }
   render(){
     const healthClass = ['최상', '양호', '보통', '불안', '최악']
@@ -131,12 +131,14 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
           donut
           sectionAutoFocus
           radius={120}
+          innerRadius={60}
           textSize={20}
           textColor= '#ffffff'
           fontWeight='900'
           labelsPosition='outward'
           textBackgroundRadius={26}
           innerCircleColor={'#cfd5ff'}
+          showValuesAsLabels          
         />
         {amountActivityComponent()}
       </View>
