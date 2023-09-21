@@ -65,12 +65,58 @@ const amountActivityComponent = () => {
   );
 };
 
-class HealthChart extends Component {
+type HealthChartProps = {
+  
+}
+type thisHealthChart = {
+  healthScore: number,
+  ages: number,
+  averageHealthScore: number,
+  differenceValue: number | null,
+  keywordCode: number,
+}
+class HealthChart extends Component <HealthChartProps, thisHealthChart> {
+  constructor(props: HealthChartProps) {
+    super(props);
+    this.state = {
+      healthScore: 65,
+      ages: 70,
+      averageHealthScore: 60,
+      differenceValue: 0,
+      keywordCode: 0
+    };
+  }
+  doComparison = () => {
+    if( this.state.healthScore > this.state.averageHealthScore ){
+      this.setState({
+        differenceValue: this.state.healthScore - this.state.averageHealthScore,
+        keywordCode: 0
+      })
+    }
+    else if( this.state.healthScore == this.state.averageHealthScore ){
+      this.setState({
+        differenceValue: null,
+        keywordCode: 1
+      })
+    }
+    else{
+      this.setState({
+        differenceValue: this.state.averageHealthScore - this.state.healthScore,
+        keywordCode: 2
+      })
+    }
+  }  
+  componentDidMount(): void {
+      this.doComparison()
+  }
   render(){
+    const healthClass = ['최상', '양호', '보통', '불안', '최악']
+    const womanAverage = ['여성 평균 점수보다', '여성 평균점수', '남성 평균 점수', '남성 평균점수']
+    const averageComparison = ["점 높습니다.", '와 같습니다.', '점 낮습니다.']
     return (
       <View style={styles.container}>
-        <Text style={styles.textStyle}>오늘의 건강점수는 80점으로 양호하며,</Text>
-        <Text style={styles.textStyle}>70대 여성 평균 점수보다 10점 높습니다.</Text>
+        <Text style={styles.textStyle}>오늘의 건강점수는 {this.state.healthScore}점으로 {healthClass[2]}하며,</Text>
+        <Text style={styles.textStyle}>{this.state.ages}대 {womanAverage[this.state.keywordCode]} {this.state.differenceValue}{averageComparison[this.state.keywordCode]}</Text>
         <BarChart 
           data = {healthScore} 
           autoShiftLabels = {true}
