@@ -32,16 +32,16 @@ class Body extends Component<BodyProps> {
           todayDate={this.props.todayDate}  
           conditionCode={this.props.conditionCode}   
         />
-        <Situation2 
+        {/* <Situation2 
           name={this.props.name} 
           onBedtime = {this.props.onBedtime}
           onWakeUptime = {this.props.onWakeUptime}
           onSleeptimes = {this.props.onSleeptimes}
           onSleepmins = {this.props.onSleepmins}
-        />
-        <HealthChart />
-        <Location />
-        <RecLocation name={this.props.name} />
+        /> */}
+        {/* <HealthChart /> */}
+        {/* <Location /> */}
+        {/* <RecLocation name={this.props.name} /> */}
       </View>
     );
   }  
