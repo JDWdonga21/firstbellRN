@@ -1,5 +1,18 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+# Dev ToDoLIst
+- 전체적인 컴포넌트 제작 (240119)
+## Header
+- 이미지 변경, 상단에 메뉴버튼 추가
+- 위치 API 연구
+- 날씨 구현 및 날씨 아이콘, 날씨 API
+## Body
+- 만보기 기능 구현, 테스트
+- 건강점수 표시, 점수 저장
+- 저장된 값을 이용해서 '무한 스클롤' 리스트 화면 구현
+- 건강 차트 bar 형태 만들기
+## Footer
+- 비상전화
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
