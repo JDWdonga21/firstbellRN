@@ -14,17 +14,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 //해더 이미지
-import AppHeaders from '../../assets/old-man-walking/header_background.svg';
-import Headerimg from '../../assets/old-man-walking/header_img.svg';
-import Sunny from '../../assets/icons/weather/Sunny.svg';
-import FewClouds from '../../assets/icons/weather/Few Cloudy.svg';
-import ScatteredClouds from '../../assets/icons/weather/PartlyCloudy.svg';
-import BrokeClouds from '../../assets/icons/weather/broken clouds.svg';
-import ShowerRain from '../../assets/icons/weather/shower Rain.svg';
-import Rain from '../../assets/icons/weather/Rainy.svg';
-import Thunderstorm from '../../assets/icons/weather/RainThunder.svg';
-import Snow from '../../assets/icons/weather/Snowy.svg';
-import Mist from '../../assets/icons/weather/mist.svg';
+import AppHeaders from '../../../assets/old-man-walking/header_background.svg';
+import Headerimg from '../../../assets/old-man-walking/header_img.svg';
+import Sunny from '../../../assets/icons/weather/Sunny.svg';
+import FewClouds from '../../../assets/icons/weather/Few Cloudy.svg';
+import ScatteredClouds from '../../../assets/icons/weather/PartlyCloudy.svg';
+import BrokeClouds from '../../../assets/icons/weather/broken clouds.svg';
+import ShowerRain from '../../../assets/icons/weather/shower Rain.svg';
+import Rain from '../../../assets/icons/weather/Rainy.svg';
+import Thunderstorm from '../../../assets/icons/weather/RainThunder.svg';
+import Snow from '../../../assets/icons/weather/Snowy.svg';
+import Mist from '../../../assets/icons/weather/mist.svg';
 
 //권한
 

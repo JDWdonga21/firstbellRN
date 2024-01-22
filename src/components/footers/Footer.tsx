@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 // 전화기
-import Call from '../assets/call.svg';
+import Call from '../../../assets/call.svg';
 
 class Footer extends Component {
   createTwoButtonAlert = () =>{

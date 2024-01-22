@@ -12,7 +12,7 @@ import PlatformTouchable from 'react-native-platform-touchable';
 // 만보기 기능 구현
 
 // 이미지 에셋
-import Heart from '../../assets/icons/heart.svg';
+import Heart from '../../../assets/icons/heart.svg';
 
 type SituationProps = {
   healthScore: number;
