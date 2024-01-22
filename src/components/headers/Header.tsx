@@ -7,6 +7,7 @@ import {
   StatusBar,
   ViewStyle,
   Platform,
+  Button,
 } from 'react-native';
 import PlatformTouchable from 'react-native-platform-touchable';
 import Icons from '../common/Icons';
@@ -27,6 +28,9 @@ import Snow from '../../../assets/icons/weather/Snowy.svg';
 import Mist from '../../../assets/icons/weather/mist.svg';
 
 //권한
+import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
+
+import Toast from 'react-native-simple-toast';
 
 //날씨 정보 받아오기(위치 가져오기)
 import GeoPosition from 'react-native-geolocation-service';
@@ -38,6 +42,8 @@ type HeaderProps = {
   temperatures: number;
 };
 type Headers = {
+  isLocaPermitted: boolean;
+
   latitude: null | number;
   longitude: null | number;
   weathersIdx: number;
@@ -53,6 +59,8 @@ class Header extends Component<HeaderProps, Headers> {
   constructor(props: HeaderProps) {
     super(props);
     this.state = {
+      isLocaPermitted: false,
+
       latitude : 0,
       longitude : 0,
       weathersIdx : 0,
@@ -64,7 +72,37 @@ class Header extends Component<HeaderProps, Headers> {
     }
   }
 
+  permissionChk = () =>{
+    if(Platform.OS !== 'ios' && Platform.OS !== "android"){
+      return;
+    }
+    const platformPermissions = 
+     Platform.OS === 'ios'
+     ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+     : PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION;
+    const requestLocationPermission = async() => {
+      try{
+        const result = await request(platformPermissions);
+        result === RESULTS.GRANTED
+        ? this.setState({ isLocaPermitted : true })
+        : Toast.show("위치권한 허용해주세요.", 2);
+      }catch(err){
+        Toast.show("알람에 문제가 있다.", 0.5);
+        console.log("위치권한 : ", err);
+      }
+    }
+    requestLocationPermission();
+  }
+
   componentDidMount(): void {
+    /**
+     * 권한 확인
+     */    
+    //위치
+    this.permissionChk();
+    /**
+     * 위치, 날씨 가져오기
+     */
     this.geoLocation();
     this.chkLocation = setInterval(() => {
      this.geoLocation();

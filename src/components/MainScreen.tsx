@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { RootSiblingParent } from 'react-native-root-siblings';
+//import { RootSiblingParent } from 'react-native-root-siblings';
 import Toast from 'react-native-root-toast';
 import Header from './headers/Header';
 import Body from './body/Body';

@@ -3,26 +3,24 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 # Dev ToDoLIst
 - 전체적인 컴포넌트 제작 (240119)
 - 권한 기능 구현
+1. 위치권한 (240122)
 ## Header
 - 이미지 변경, 상단에 메뉴버튼 추가 (240122)
 - 위치 API 연구 (240122)
-: AndroidManifest
-(
-   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-)
-Info.plist
-(
-   <key>NSLocationWhenInUseUsageDescription</key>
-	<string>위치권한</string>
-)
-android > build.gradle
-(
-   ext {
-      ...
-      playServicesLocationVersion = "21.0.1"
-   }
-)
+1. AndroidManifest
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+2. Info.plist
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>위치권한</string>
+
+3. android > build.gradle
+ext {
+   ...
+   playServicesLocationVersion = "21.0.1"
+}
+
 
 - 날씨 구현 및 날씨 아이콘, 날씨 API (240122)
 ## Body
