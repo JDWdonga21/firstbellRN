@@ -72,27 +72,41 @@ class Header extends Component<HeaderProps, Headers> {
     }
   }
 
-  permissionChk = () =>{
-    if(Platform.OS !== 'ios' && Platform.OS !== "android"){
-      return;
-    }
-    const platformPermissions = 
-     Platform.OS === 'ios'
-     ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-     : PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION;
-    const requestLocationPermission = async() => {
-      try{
-        const result = await request(platformPermissions);
-        result === RESULTS.GRANTED
-        ? this.setState({ isLocaPermitted : true })
-        : Toast.show("위치권한 허용해주세요.", 2);
-      }catch(err){
-        Toast.show("알람에 문제가 있다.", 0.5);
-        console.log("위치권한 : ", err);
-      }
-    }
-    requestLocationPermission();
+  permissionChk = () => {
+  if (Platform.OS !== 'ios' && Platform.OS !== "android") {
+    return;
   }
+  const platformPermissions = 
+    Platform.OS === 'ios'
+    ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+    : PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION;
+
+  const checkLocationPermission = async () => {
+    const status = await check(platformPermissions);
+    if (status === RESULTS.GRANTED) {
+      this.setState({ isLocaPermitted: true });
+    } else {
+      requestLocationPermission();
+    }
+  };
+
+  const requestLocationPermission = async () => {
+    try {
+      const result = await request(platformPermissions);
+      if (result === RESULTS.GRANTED) {
+        this.setState({ isLocaPermitted: true });
+      } else {
+        Toast.show("위치 권한을 허용해주세요.", 2);
+      }
+    } catch (err) {
+      Toast.show("권한 요청에 문제가 발생했습니다.", 0.5);
+      console.log("위치 권한 요청 에러: ", err);
+    }
+  };
+
+  checkLocationPermission();
+};
+
 
   componentDidMount(): void {
     /**
