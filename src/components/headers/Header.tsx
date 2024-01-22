@@ -30,28 +30,7 @@ import Mist from '../../../assets/icons/weather/mist.svg';
 
 //날씨 정보 받아오기(위치 가져오기)
 import GeoPosition from 'react-native-geolocation-service';
-//import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
-
-// const GeoLocationAPI = ({
-
-// }) => {
-//     const [latitude, setLatitude] = useState(null);
-//     const [longitude, setLogitude] = useState(null);
-
-//     const geoLocation = () => {
-//         Geolocation.getCurrentPosition(
-//             position => {
-//                 const latitude = JSON.stringify(position.coords.latitude);
-//                 const longitude = JSON.stringify(position.coords.longitude);
-
-//                 setLatitude(latitude);
-//                 setLogitude(longitude);
-//             },
-//             error => { console.log(error.code, error.message); },
-//             {enableHighAccuracy:true, timeout: 15000, maximumAge: 10000 },
-//         )
-//     }
 
 type HeaderProps = {
   name: string;
