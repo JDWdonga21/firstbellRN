@@ -1,12 +1,15 @@
 import React from "react";
 import { TouchableOpacity, ViewStyle } from "react-native";
 import {IconProps} from "react-native-vector-icons/Icon";
+
 import { GestureResponderEvent } from "react-native/Libraries/Types/CoreEventTypes";
 import EntypoIcon from "react-native-vector-icons/Entypo";
+import Ionicons from "react-native-vector-icons/Ionicons"
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const IconType = {
     EntypoIcon: EntypoIcon,
+    Ionicons: Ionicons,
 };
 
 export type IconTypeKey = keyof typeof IconType;

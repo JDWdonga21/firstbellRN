@@ -6,6 +6,7 @@ import {
   StyleSheet,
   StatusBar,
   ViewStyle,
+  Platform,
 } from 'react-native';
 import PlatformTouchable from 'react-native-platform-touchable';
 import Icons from '../common/Icons';
@@ -36,7 +37,12 @@ type HeaderProps = {
   temperatures: number;
 };
 type Headers = {
-
+  weathersIdx: number;
+  weather: {
+    temp: number | string;
+    condition: string;
+    icons: string;
+  }
 }
 
 class Header extends Component<HeaderProps, Headers> {
@@ -52,10 +58,48 @@ class Header extends Component<HeaderProps, Headers> {
     }
   }
   render() {
+    const weatherList = [
+      {
+        weathersIcon : <Sunny />,
+        weathersText : "맑은 날"
+      },
+      {
+        weathersIcon : <FewClouds />,
+        weathersText : "약간 구름"
+      },
+      {
+        weathersIcon : <ScatteredClouds />,
+        weathersText : "조금 구름"
+      },
+      {
+        weathersIcon : <BrokeClouds />,
+        weathersText : "많은 구름"
+      },
+      {
+        weathersIcon : <ShowerRain />,
+        weathersText : "우산을 준비"
+      },
+      {
+        weathersIcon : <Rain />,
+        weathersText : "비 오는 날"
+      },
+      {
+        weathersIcon : <Thunderstorm />,
+        weathersText : "악천우 상황"
+      },
+      {
+        weathersIcon : <Snow />,
+        weathersText : "미끄럼 주의"
+      },
+      {
+        weathersIcon : <Mist />,
+        weathersText : "안개 발생"
+      },
+    ]
     return(
       <SafeAreaProvider style={{flexDirection: 'column', flex: 1}}>
         <StatusBar translucent={true} />
-        {
+        {        
 
         }
         <SafeAreaProvider style={{flexDirection: 'column', flex: 1}}>
@@ -66,45 +110,40 @@ class Header extends Component<HeaderProps, Headers> {
           <View style={[styles.overlappingMenuBar, {paddingTop: 30,}]}>
             <View style={[styles.Menuicon, {borderRadius: 20,}]}>
               <PlatformTouchable
-                onPress={()=>{}}
+                onPress={()=>{console.log("눌러")}}
                 background={
                   PlatformTouchable.Ripple('gray', true)
                 }
               >
-                <Icons isClickable={false} type={"EntypoIcon"} name={"menu"} size={32} color={Colors.black}/>
+                <Icons isClickable={false} type={'Ionicons'} name='menu' size={32} color={Colors.black}/>
               </PlatformTouchable>
             </View>
           </View>
-          <View style={[styles.overlappingTest, {}]}>
-          <View style={{flexDirection: 'column', flex: 1}}>
-            <View style={{flex: 1}}>
-              <Text style={{fontSize: 30, color: 'black'}}>{this.props.name}님,</Text>
-              <Text style={{fontSize: 30, color: 'black', fontWeight: 'bold'}}>오늘 기분은 어때요?</Text>
-            </View>
-            <View style={{flex: 1, flexDirection: 'row', marginTop: 20}}>
-              <View style={styles.location}>
-                <View style={{flex: 1, flexDirection: 'column'}}>
-                  <View style={{flex: 1}}>
-                    {/* 현제위치 주소 */}
+            <View style={[styles.overlappingTest, {}]}>
+              <View style={{flexDirection: 'column', flex: 1}}>
+                <View style={{flex: 1}}>
+                  <Text style={{fontSize: 30, color: 'black'}}>{this.props.name}님,</Text>
+                  <Text style={{fontSize: 30, color: 'black', fontWeight: 'bold'}}>오늘 기분은 어때요?</Text>
+                </View>
+              <View style={{flex: 1, flexDirection: 'row', marginTop: 20}}>
+                <View style={styles.location}>
+                  <View style={{flex: 1, flexDirection: 'column'}}>
+                    <View style={{flex: 1}}>
+                      {/* 현제위치 주소 */}
+                    </View> 
+                    <View>
+                      <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'left'}}>{weatherList[this.state.weathersIdx].weathersText}</Text>
+                    </View>                      
                   </View> 
-                  <View>
-                    <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'left'}}> 외출 시 우산 챙겨 가세요!</Text>
-                  </View>                      
-                </View> 
-              </View>
-                  <View style={{flexDirection: 'row',  alignItems: 'center', marginTop: 5}}>
-                    <View style={{marginTop: 5}}>
-                      
-                    </View>                    
-                </View>    
+                </View>        
               </View>
             </View>
           </View>
           <View style={styles.Weathericon}>
-            {}
+            {weatherList[this.state.weathersIdx].weathersIcon}
           </View>      
           <View style={styles.Weather}>
-            <Text style={{fontSize: 30, fontWeight: 'bold'}}>{}eh</Text>
+            <Text allowFontScaling={false} style={{fontSize: 30, fontWeight: 'bold'}}>{this.state.weather.temp}°</Text>
           </View>
         </SafeAreaProvider>
       </SafeAreaProvider>
