@@ -8,6 +8,7 @@ import {
   ViewStyle,
   Platform,
   Button,
+  AppState,
 } from 'react-native';
 import PlatformTouchable from 'react-native-platform-touchable';
 import Icons from '../common/Icons';
@@ -28,7 +29,7 @@ import Snow from '../../../assets/icons/weather/Snowy.svg';
 import Mist from '../../../assets/icons/weather/mist.svg';
 
 //권한
-import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
+import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 
 import Toast from 'react-native-simple-toast';
 
@@ -126,8 +127,15 @@ class Header extends Component<HeaderProps, Headers> {
   componentWillUnmount(): void {
     if (this.chkLocation){
       clearInterval(this.chkLocation);
-    }
+    };
   };
+
+  handleAppStateChange = (nextAppState : any) => {
+    if(nextAppState === 'active'){
+      this.permissionChk();
+    }
+  }
+
   geoLocation = () => {
     console.log("위치")
     GeoPosition.watchPosition (
