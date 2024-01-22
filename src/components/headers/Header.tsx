@@ -29,7 +29,29 @@ import Mist from '../../../assets/icons/weather/mist.svg';
 //권한
 
 //날씨 정보 받아오기(위치 가져오기)
+import GeoPosition from 'react-native-geolocation-service';
+//import Geolocation from '@react-native-community/geolocation';
+import axios from 'axios';
 
+// const GeoLocationAPI = ({
+
+// }) => {
+//     const [latitude, setLatitude] = useState(null);
+//     const [longitude, setLogitude] = useState(null);
+
+//     const geoLocation = () => {
+//         Geolocation.getCurrentPosition(
+//             position => {
+//                 const latitude = JSON.stringify(position.coords.latitude);
+//                 const longitude = JSON.stringify(position.coords.longitude);
+
+//                 setLatitude(latitude);
+//                 setLogitude(longitude);
+//             },
+//             error => { console.log(error.code, error.message); },
+//             {enableHighAccuracy:true, timeout: 15000, maximumAge: 10000 },
+//         )
+//     }
 
 type HeaderProps = {
   name: string;
@@ -37,6 +59,8 @@ type HeaderProps = {
   temperatures: number;
 };
 type Headers = {
+  latitude: null | number;
+  longitude: null | number;
   weathersIdx: number;
   weather: {
     temp: number | string;
@@ -46,9 +70,12 @@ type Headers = {
 }
 
 class Header extends Component<HeaderProps, Headers> {
+  chkLocation = null as null | NodeJS.Timeout;
   constructor(props: HeaderProps) {
     super(props);
     this.state = {
+      latitude : 0,
+      longitude : 0,
       weathersIdx : 0,
       weather: {
         temp: '-',
@@ -57,6 +84,86 @@ class Header extends Component<HeaderProps, Headers> {
       }
     }
   }
+
+  componentDidMount(): void {
+    this.geoLocation();
+    this.chkLocation = setInterval(() => {
+     this.geoLocation();
+    }, 600000);
+  };
+
+  componentWillUnmount(): void {
+    if (this.chkLocation){
+      clearInterval(this.chkLocation);
+    }
+  };
+  geoLocation = () => {
+    console.log("위치")
+    GeoPosition.watchPosition (
+      (position) => {
+        const { latitude, longitude } = position.coords
+        console.log(latitude + " / " + longitude)
+        this.getWeather(latitude, longitude) 
+      },
+      error => { console.log(error.code, error.message); },
+      {enableHighAccuracy:true,},
+    )
+    
+  }
+  getWeather = async (_lat : number ,_long : number) => {
+    try {
+      // 위치 가져오고 날씨 API 요청 보내기
+      
+      if(_lat !== null && _long !== null){
+        console.log(_lat, ' ' ,_long)
+        const API_KEY = "2ccb7733a7b5a5ec23c60ef1b9d6d6f6"
+        const result = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${_lat}&lon=${_long}&appid=${API_KEY}&units=metric`
+        );
+        const betemp = result.data.main.temp;
+        //소수점 1자리까지 표시
+        const temp = parseFloat(betemp.toFixed(1));
+        const condition = result.data.weather[0].main;
+        const icons = result.data.weather[0].icon;
+        console.log("----- - ------- - ----------")
+        console.log(result.data.weather[0].icon)
+        console.log("----- - ------- - ----------")
+        console.log(temp);
+        console.log(condition);
+        this.changeWeather(icons);
+        this.setState({
+          weather: {temp, condition, icons},
+        });
+      }
+    } catch(error) {
+      console.log("날씨 실패 : ", error);
+    }
+  };
+
+  changeWeather = (_weatherCode : string) => {
+    if(_weatherCode === '01d' || _weatherCode === '01n'){
+      this.setState({ weathersIdx: 0 })
+    }else if(_weatherCode === '02d' || _weatherCode === '02n'){
+      this.setState({ weathersIdx: 1 })
+    }else if(_weatherCode === '03d' || _weatherCode === '03n'){
+      this.setState({ weathersIdx: 2 })
+    }else if(_weatherCode === '04d' || _weatherCode === '04n'){
+      this.setState({ weathersIdx: 3 })
+    }else if(_weatherCode === '09d' || _weatherCode === '09n'){
+      this.setState({ weathersIdx: 4 })
+    }else if(_weatherCode === '10d' || _weatherCode === '10n'){
+      this.setState({ weathersIdx: 5 })
+    }else if(_weatherCode === '11d' || _weatherCode === '11n'){
+      this.setState({ weathersIdx: 6 })
+    }else if(_weatherCode === '13d' || _weatherCode === '13n'){
+      this.setState({ weathersIdx: 7 })
+    }else if(_weatherCode === '50d' || _weatherCode === '50n'){
+      this.setState({ weathersIdx: 8 })
+    }else {
+      console.log("날씨 코드 오류")
+    }
+  }
+
   render() {
     const weatherList = [
       {
@@ -110,7 +217,7 @@ class Header extends Component<HeaderProps, Headers> {
           <View style={[styles.overlappingMenuBar, {paddingTop: 30,}]}>
             <View style={[styles.Menuicon, {borderRadius: 20,}]}>
               <PlatformTouchable
-                onPress={()=>{console.log("눌러")}}
+                onPress={this.geoLocation}
                 background={
                   PlatformTouchable.Ripple('gray', true)
                 }
@@ -132,7 +239,7 @@ class Header extends Component<HeaderProps, Headers> {
                       {/* 현제위치 주소 */}
                     </View> 
                     <View>
-                      <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'left'}}>{weatherList[this.state.weathersIdx].weathersText}</Text>
+                      <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'left', color:'black'}}>{weatherList[this.state.weathersIdx].weathersText}</Text>
                     </View>                      
                   </View> 
                 </View>        
@@ -143,7 +250,7 @@ class Header extends Component<HeaderProps, Headers> {
             {weatherList[this.state.weathersIdx].weathersIcon}
           </View>      
           <View style={styles.Weather}>
-            <Text allowFontScaling={false} style={{fontSize: 30, fontWeight: 'bold'}}>{this.state.weather.temp}°</Text>
+            <Text allowFontScaling={false} style={{fontSize: 30, fontWeight: 'bold', color:'black'}}>{this.state.weather.temp}°</Text>
           </View>
         </SafeAreaProvider>
       </SafeAreaProvider>
