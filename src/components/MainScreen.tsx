@@ -16,6 +16,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 type AppState = {
   name: string,
+  age: number,
+  male: number,
   address: string,
   temperatures: number,
   healthScore: number,
@@ -36,6 +38,8 @@ class MainScreen extends Component<{}, AppState> {
     this.state = {
       // All
       name: '이춘자',
+      age: 73,
+      male: 1,
       //Header
       address: '해운대구 수영강변대로',
       temperatures: 25,
@@ -111,9 +115,11 @@ class MainScreen extends Component<{}, AppState> {
               />
               <Body 
                 name={this.state.name} 
-                healthScore={this.state.healthScore}
+                age={this.state.age}
+                male={this.state.male}
+                // healthScore={this.state.healthScore}
                 todayDate = {this.state.todayDate}
-                conditionCode = {this.state.conditionCode}
+                // conditionCode = {this.state.conditionCode}
                 onBedtime = {this.state.onBedtime}
                 onWakeUptime = {this.state.onWakeUptime}
                 onSleeptimes = {this.state.onSleeptimes}
