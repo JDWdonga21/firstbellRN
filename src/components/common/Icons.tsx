@@ -4,12 +4,14 @@ import {IconProps} from "react-native-vector-icons/Icon";
 
 import { GestureResponderEvent } from "react-native/Libraries/Types/CoreEventTypes";
 import EntypoIcon from "react-native-vector-icons/Entypo";
-import Ionicons from "react-native-vector-icons/Ionicons"
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Foundation from "react-native-vector-icons/Foundation";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const IconType = {
     EntypoIcon: EntypoIcon,
     Ionicons: Ionicons,
+    Foundation: Foundation,
 };
 
 export type IconTypeKey = keyof typeof IconType;

@@ -30,6 +30,7 @@ import Mist from '../../../assets/icons/weather/mist.svg';
 
 //권한
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
+import BlurAndCheckPermission from '../common/BlurAndCheckPermission';
 
 import Toast from 'react-native-simple-toast';
 
@@ -43,7 +44,7 @@ type HeaderProps = {
   temperatures: number;
 };
 type Headers = {
-  isLocaPermitted: boolean;
+  isPermitted: boolean;
 
   latitude: null | number;
   longitude: null | number;
@@ -60,7 +61,7 @@ class Header extends Component<HeaderProps, Headers> {
   constructor(props: HeaderProps) {
     super(props);
     this.state = {
-      isLocaPermitted: false,
+      isPermitted: false,
 
       latitude : 0,
       longitude : 0,
@@ -85,7 +86,7 @@ class Header extends Component<HeaderProps, Headers> {
   const checkLocationPermission = async () => {
     const status = await check(platformPermissions);
     if (status === RESULTS.GRANTED) {
-      this.setState({ isLocaPermitted: true });
+      this.setState({ isPermitted: true });
     } else {
       requestLocationPermission();
     }
@@ -95,7 +96,7 @@ class Header extends Component<HeaderProps, Headers> {
     try {
       const result = await request(platformPermissions);
       if (result === RESULTS.GRANTED) {
-        this.setState({ isLocaPermitted: true });
+        this.setState({ isPermitted: true });
       } else {
         Toast.show("위치 권한을 허용해주세요.", 2);
       }
@@ -114,14 +115,14 @@ class Header extends Component<HeaderProps, Headers> {
      * 권한 확인
      */    
     //위치
-    this.permissionChk();
+    //this.permissionChk();
     /**
      * 위치, 날씨 가져오기
      */
     this.geoLocation();
     this.chkLocation = setInterval(() => {
      this.geoLocation();
-    }, 600000);
+    }, 300000);
   };
 
   componentWillUnmount(): void {
@@ -138,7 +139,7 @@ class Header extends Component<HeaderProps, Headers> {
 
   geoLocation = () => {
     console.log("위치")
-    GeoPosition.watchPosition (
+    GeoPosition.getCurrentPosition (
       (position) => {
         const { latitude, longitude } = position.coords
         console.log(latitude + " / " + longitude)
@@ -177,6 +178,9 @@ class Header extends Component<HeaderProps, Headers> {
     } catch(error) {
       console.log("날씨 실패 : ", error);
     }
+  };
+  permissionPermitted = () => {
+    this.setState({isPermitted: true}, );
   };
 
   changeWeather = (_weatherCode : string) => {
@@ -245,8 +249,10 @@ class Header extends Component<HeaderProps, Headers> {
     return(
       <SafeAreaProvider style={{flexDirection: 'column', flex: 1}}>
         <StatusBar translucent={true} />
-        {        
-
+        {Platform.OS === 'android' ?
+          <BlurAndCheckPermission permissionType={["location"]} callback={(_isPermitted) => _isPermitted && this.permissionPermitted()}/>
+        :
+          <BlurAndCheckPermission permissionType={["location"]} callback={(_isPermitted) => _isPermitted && this.permissionPermitted()}/>
         }
         <SafeAreaProvider style={{flexDirection: 'column', flex: 1}}>
           <AppHeaders />
