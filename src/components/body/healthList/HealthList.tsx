@@ -31,29 +31,51 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
         super(Props)
         this.state = {
             DataList : [
-                // {
-                //     id: '0',
-                //     title: 'First Item',
-                //     date: '',
-                //     FinStepCount: 10,
-                //     FinHealthScr: 20,
-                // },
-                // {
-                //     id: '1',
-                //     title: 'Second Item',
-                //     date: '',
-                //     FinStepCount: 10,
-                //     FinHealthScr: 30,
-                // },
+                {
+                    id: '0',
+                    title: 'First Item',
+                    date: '',
+                    FinStepCount: 10,
+                    FinHealthScr: 20,
+                },
+                {
+                    id: '1',
+                    title: 'Second Item',
+                    date: '',
+                    FinStepCount: 10,
+                    FinHealthScr: 30,
+                },
+                {
+                    id: '2',
+                    title: 'Second Item',
+                    date: '',
+                    FinStepCount: 10,
+                    FinHealthScr: 30,
+                },
+                {
+                    id: '3',
+                    title: 'Second Item',
+                    date: '',
+                    FinStepCount: 10,
+                    FinHealthScr: 30,
+                },
+                {
+                    id: '4',
+                    title: 'Second Item',
+                    date: '',
+                    FinStepCount: 10,
+                    FinHealthScr: 30,
+                },
             ]
         };
     }
     componentDidMount(): void {
-        // this.renderItem2(this.state.DataList);
+        this.onEndReached();
     }
     renderItem2 = ({item} : any) => {
         const myId = item?.id;
         const categoryTitle = item?.title;
+        const itemsDate = item.date;
         const doneVideos = item.FinStepCount;
         const totalVideos = item.FinHealthScr;
         const rate = (doneVideos/ totalVideos) * 100;
@@ -71,12 +93,15 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
                   {myId} : {categoryTitle}
                 </Text>
               </TouchableOpacity>
+              <Text style={{fontWeight: 'bold', color: 'black'}}>날짜 : {itemsDate} </Text>
+              <Text style={{fontWeight: 'bold', color: 'black'}}>걸음 수 : {doneVideos}</Text>
+              <Text style={{fontWeight: 'bold', color: 'black'}}>건강점수 : {totalVideos}</Text>
               <View style={{marginTop: 10}}>
                 <Progress.Bar progress={rate / 100} width={null} height={10} color={'#FF0044'} />
               </View>
               <View style={{alignItems: 'center'}}>
                 <Text style={{fontWeight: 'bold', color: '#2b2525'}}>
-                  진행율 {rate.toFixed(2)} %
+                  건강점수 달설률 {rate.toFixed(2)} %
                 </Text>
               </View>
             </View>
@@ -97,7 +122,10 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
     render() {
         return(
             <SafeAreaView style={styles.container}>
-                <View>
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>지난 건강점수 데이터</Text>
+                </View>
+                <View style={{flex: 9}}>
                     <FlatList 
                         data={this.state.DataList}
                         renderItem={this.renderItem2}
