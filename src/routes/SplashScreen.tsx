@@ -23,7 +23,8 @@ class SplashScreen extends Component<SplashScreenProps> {
   }
 
   onNextScreen = () => {
-    this.props.navigation.navigate('Main');
+    // this.props.navigation.navigate('Main');
+    this.props.navigation.replace('Main');
   }
 
   render() {

@@ -6,7 +6,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 1. 위치권한 (240122)
 2. 제로웹(Bell)에서 쓰던 권한 기능 가져옴 (240123)
 
-- 메인 화면에서 종료시 Splash 화면으로 돌아가지 않고 바로 종료
+- 메인 화면에서 종료시 Splash 화면으로 돌아가지 않고 바로 종료 (240124)
 ## Header
 - 이미지 변경, 상단에 메뉴버튼 추가 (240122)
 - 위치 API 연구 (240122)
