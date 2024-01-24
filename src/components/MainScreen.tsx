@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -13,7 +14,11 @@ import Header from './headers/Header';
 import Body from './body/Body';
 import Footer from './footers/Footer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StackNavigationProp } from '@react-navigation/stack';
 
+type MainScreenProps = {
+  navigation: StackNavigationProp<any, 'Main'>; // Replace 'any' with your ParamList if you have one
+};
 type AppState = {
   name: string,
   age: number,
@@ -31,9 +36,9 @@ type AppState = {
   onSleepmins: number,
 };
 
-class MainScreen extends Component<{}, AppState> {
+class MainScreen extends Component<MainScreenProps, AppState> {
   timer = null as null |  NodeJS.Timeout;
-  constructor(props: {}) {
+  constructor(props: MainScreenProps) {
     super(props);
     this.state = {
       // All
@@ -100,6 +105,10 @@ class MainScreen extends Component<{}, AppState> {
       onSleepmins: sleepMins,
     });    
   }
+  barChartChk = () => {
+    console.log('바차트 클릭');
+    this.props.navigation.navigate('HealthList');
+  }
 
   render() {
     return (      
@@ -113,13 +122,14 @@ class MainScreen extends Component<{}, AppState> {
                 address={this.state.address}
                 temperatures={this.state.temperatures}
               />
+              {/* <Button title='ddd' onPress={this.barChartChk} /> */}
               <Body 
                 name={this.state.name} 
                 age={this.state.age}
                 male={this.state.male}
                 // healthScore={this.state.healthScore}
                 todayDate = {this.state.todayDate}
-                // conditionCode = {this.state.conditionCode}
+                onHealthList = {this.barChartChk}
                 onBedtime = {this.state.onBedtime}
                 onWakeUptime = {this.state.onWakeUptime}
                 onSleeptimes = {this.state.onSleeptimes}

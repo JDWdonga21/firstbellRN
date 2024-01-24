@@ -19,6 +19,7 @@ type BodyProps = {
   onWakeUptime: Date,
   onSleeptimes: number,
   onSleepmins: number,
+  onHealthList: () => void,
 };
 
 class Body extends Component<BodyProps> {
@@ -62,6 +63,7 @@ class Body extends Component<BodyProps> {
           male={this.props.male}
           todayDate={this.props.todayDate}
           stepWeek={this.stepWeek}
+          onHealthList = {this.props.onHealthList}
         />
         {/* <Location /> */}
         {/* <RecLocation name={this.props.name} /> */}

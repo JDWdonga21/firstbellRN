@@ -9,6 +9,9 @@ import {
 import PlatformTouchable from 'react-native-platform-touchable';
 
 import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
+
+
+
 const defhealthScore = [ 
   {value:50, label: "0일", frontColor: '#177AD5'}, 
   {value:50, label: "0일", frontColor: '#177AD5'}, 
@@ -41,6 +44,7 @@ type HealthChartProps = {
   male: number,
   todayDate: Date,
   stepWeek: number[][],
+  onHealthList: () => void,
 }
 type thisHealthChart = {
   healthScore: number,
@@ -122,6 +126,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
   };
   barChartChk = () => {
     console.log('바차트 클릭');
+    this.props.onHealthList();
   }
   render(){
     const healthClass = ['최상', '양호', '보통', '불안', '최악']
@@ -129,26 +134,43 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
     const averageComparison = ["점 높습니다.", '와 같습니다.', '점 낮습니다.']
     return (
       <View style={styles.container}>
-        <Text style={styles.textStyle}>오늘의 건강점수는 {this.state.healthScore}점으로 {healthClass[2]}하며,</Text>
-        <Text style={styles.textStyle}>{this.state.ages}대 {womanAverage[this.state.keywordCode]} {this.state.differenceValue}{averageComparison[this.state.keywordCode]}</Text>
-        {
-          this.state.healthScores !== null ?
-          <BarChart 
-            data = {this.state.healthScores} 
-            autoShiftLabels = {true}
-            barWidth={25}
-            barBorderRadius={4}
-            spacing = {10}
-          />
-          :
-          <BarChart 
-            data = {defhealthScore} 
-            autoShiftLabels = {true}
-            barWidth={25}
-            barBorderRadius={4}
-            spacing = {10}
-          />
-        }
+        <View
+          style={{flex: 1, minHeight: 110, alignItems: 'center', justifyContent: 'center'}}
+        >
+          <Text style={styles.textStyle}>오늘의 건강점수는 {this.state.healthScore}점으로 {healthClass[2]}하며,</Text>
+          <Text style={styles.textStyle}>{this.state.ages}대 {womanAverage[this.state.keywordCode]} {this.state.differenceValue}{averageComparison[this.state.keywordCode]}</Text>
+        </View>
+        <View
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+        >
+          <PlatformTouchable
+            onPress={this.barChartChk}
+            style={{flex: 1}}
+            background={PlatformTouchable.Ripple('white')}
+          >
+            {
+              this.state.healthScores !== null ?
+              <BarChart 
+                data = {this.state.healthScores} 
+                autoShiftLabels = {true}
+                barWidth={25}
+                barBorderRadius={4}
+                spacing = {10}
+              />
+              :
+              <BarChart 
+                data = {defhealthScore} 
+                autoShiftLabels = {true}
+                barWidth={25}
+                barBorderRadius={4}
+                spacing = {10}
+              />
+            }
+          </PlatformTouchable>
+        </View>
+        
+        
+        
         
         <View style= {{margin: 20}} />
         {/* <PieChart 
@@ -174,7 +196,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    padding: 20,
+    padding: 10,
     flex: 1,
     backgroundColor: '#cfd5ff',
     marginRight: 30,
