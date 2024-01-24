@@ -6,86 +6,65 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-
+import PlatformTouchable from 'react-native-platform-touchable';
 
 import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
+const defhealthScore = [ 
+  {value:50, label: "0일", frontColor: '#177AD5'}, 
+  {value:50, label: "0일", frontColor: '#177AD5'}, 
+  {value:50, label: "0일", frontColor: '#177AD5'}, 
+  {value:50, label: "0일", frontColor: '#177AD5'}, 
+  {value:50, label: "0일", frontColor: '#177AD5'}, 
+  {value:50, label: "0일", frontColor: '#177AD5'}, 
+  {value:50, label: "0일", frontColor: '#177AD5'} 
+]
+//날짜를 표시하는 함수
+const getFormattedDate = (date : Date) => {
+  return `${date.getDate()}일`;
+}
+//지난 일주일간의 날짜를 생성하는 함수
+const getLastWeekDates = () => {
+  const dates = [];
+  const today = new Date();
+  for (let i = 6; i >=0; i--){
+    const day = new Date(today);
+    day.setDate(day.getDate() - 1);
+    dates.push(getFormattedDate(day));
+  }
+  return dates;
+}
+// 건강점수 배열을 생성
+const lastWeekDates = getLastWeekDates();
 
-const healthScore = [ 
-  {value:50, label: "23일", frontColor: '#177AD5'}, 
-  {value:80, label: "24일", frontColor: '#177AD5'}, 
-  {value:90, label: "25일", frontColor: '#177AD5'}, 
-  {value:70, label: "26일", frontColor: '#177AD5'}, 
-  {value:60, label: "27일", frontColor: '#177AD5'}, 
-  {value:40, label: "28일", frontColor: '#177AD5'}, 
-  {value:30, label: "29일", frontColor: '#177AD5'} 
-]
-const amountActivity = [
-  {value:62, text: "62%", color: '#ff6464', gradientCenterColor: '#ff6464'}, 
-  {value:54, text: "54%", color: '#330086', gradientCenterColor: '#1b0046'},  
-]
-const renderDot = (color : string) => {
-  return (
-    <View
-      style={{
-        height: 10,
-        width: 10,
-        borderRadius: 5,
-        backgroundColor: color,
-        marginRight: 10,
-      }}
-    />
-  );
-};
-const amountActivityComponent = () => {
-  return (
-    <>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginBottom: 10,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: 120,
-            marginRight: 20,
-          }}>
-          {renderDot('#ff6464')}
-          <Text style={{color: 'white'}}>실외활동량: 62%</Text>
-        </View>
-        <View
-          style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
-          {renderDot('#330086')}
-          <Text style={{color: 'white'}}>실내활동량: 54%</Text>
-        </View>
-      </View>
-    </>
-  );
-};
 
 type HealthChartProps = {
-  
+  male: number,
+  todayDate: Date,
+  stepWeek: number[][],
 }
 type thisHealthChart = {
   healthScore: number,
   ages: number,
+  male: number,
   averageHealthScore: number,
   differenceValue: number | null,
   keywordCode: number,
+  healthScores: { value: number, label: string, frontColor: string }[] | null;
 }
 class HealthChart extends Component <HealthChartProps, thisHealthChart> {
+  timer = null as null | NodeJS.Timeout;
   constructor(props: HealthChartProps) {
     super(props);
     this.state = {
-      healthScore: 85,
+      healthScore: 0,
       ages: 70,
+      male: this.props.male,
       averageHealthScore: 65,
       differenceValue: 0,
-      keywordCode: 0
+      keywordCode: 0,
+      healthScores: this.calculateHealthScores(props)
     };
-  }
+  };
   doComparison = () => {
     if( this.state.healthScore > this.state.averageHealthScore ){
       this.setState({
@@ -105,9 +84,44 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
         keywordCode: 2
       })
     }
-  }  
+  }; 
+  makeIndex = (_index : number) => {
+    const todayWeekday = this.props.todayDate.getDay();
+    if(todayWeekday - (6 - _index) < 0){
+      return 7 + (todayWeekday - (6 - _index));
+    }else {
+      return todayWeekday - (6 - _index);
+    }
+  };
+  calculateHealthScores = (props: HealthChartProps) => {
+    console.log("차트 업!");
+    this.setState({
+      healthScore : props.stepWeek[this.props.todayDate.getDay()][2],
+    })
+    return lastWeekDates.map((date, index) => ({
+      value: props.stepWeek[this.makeIndex(index)][2],
+      label: date,
+      frontColor: '#177AD5',
+    }))
+  };
   componentDidMount(): void {
-    this.doComparison()
+    this.timer = setInterval(() => this.chatUpdate(), 10000);
+    const nowDay = this.props.todayDate.getDay();
+    console.log(nowDay);
+  };
+  componentWillUnmount(): void {
+    if(this.timer){
+      clearInterval(this.timer);
+    }
+  };
+  chatUpdate = () => {
+    this.setState({
+      healthScores: this.calculateHealthScores(this.props),
+    });
+    this.doComparison();
+  };
+  barChartChk = () => {
+    console.log('바차트 클릭');
   }
   render(){
     const healthClass = ['최상', '양호', '보통', '불안', '최악']
@@ -117,15 +131,27 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
       <View style={styles.container}>
         <Text style={styles.textStyle}>오늘의 건강점수는 {this.state.healthScore}점으로 {healthClass[2]}하며,</Text>
         <Text style={styles.textStyle}>{this.state.ages}대 {womanAverage[this.state.keywordCode]} {this.state.differenceValue}{averageComparison[this.state.keywordCode]}</Text>
-        <BarChart 
-          data = {healthScore} 
-          autoShiftLabels = {true}
-          barWidth={25}
-          barBorderRadius={4}
-          spacing = {10}
-        />
+        {
+          this.state.healthScores !== null ?
+          <BarChart 
+            data = {this.state.healthScores} 
+            autoShiftLabels = {true}
+            barWidth={25}
+            barBorderRadius={4}
+            spacing = {10}
+          />
+          :
+          <BarChart 
+            data = {defhealthScore} 
+            autoShiftLabels = {true}
+            barWidth={25}
+            barBorderRadius={4}
+            spacing = {10}
+          />
+        }
+        
         <View style= {{margin: 20}} />
-        <PieChart 
+        {/* <PieChart 
           data = {amountActivity}
           showText
           donut
@@ -140,7 +166,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
           innerCircleColor={'#cfd5ff'}
           showValuesAsLabels          
         />
-        {amountActivityComponent()}
+        {amountActivityComponent()} */}
       </View>
     )
   }

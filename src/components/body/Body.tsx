@@ -58,7 +58,11 @@ class Body extends Component<BodyProps> {
           onSleeptimes = {this.props.onSleeptimes}
           onSleepmins = {this.props.onSleepmins}
         /> */}
-        {/* <HealthChart /> */}
+        <HealthChart 
+          male={this.props.male}
+          todayDate={this.props.todayDate}
+          stepWeek={this.stepWeek}
+        />
         {/* <Location /> */}
         {/* <RecLocation name={this.props.name} /> */}
       </View>
