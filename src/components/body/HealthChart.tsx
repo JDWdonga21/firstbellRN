@@ -54,7 +54,7 @@ type thisHealthChart = {
   averageHealthScore: number,
   differenceValue: number | null,
   keywordCode: number,
-  healthScores: { value: number, label: string, frontColor: string }[] | null | any;
+  healthScores: { value: number, label: string, frontColor: string }[] | null | any[];
 }
 class HealthChart extends Component <HealthChartProps, thisHealthChart> {
   timer = null as null | NodeJS.Timeout;
