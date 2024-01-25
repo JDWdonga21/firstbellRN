@@ -39,11 +39,12 @@ const getLastWeekDates = () => {
 // 건강점수 배열을 생성
 const lastWeekDates = getLastWeekDates();
 
-
+type StepArrayEntry = [number, Date, number, number, number, number];
 type HealthChartProps = {
   male: number,
   todayDate: Date,
   stepWeek: number[][],
+  stepArrays: StepArrayEntry[],
   onHealthList: () => void,
 }
 type thisHealthChart = {
@@ -53,7 +54,7 @@ type thisHealthChart = {
   averageHealthScore: number,
   differenceValue: number | null,
   keywordCode: number,
-  healthScores: { value: number, label: string, frontColor: string }[] | null;
+  healthScores: { value: number, label: string, frontColor: string }[] | null | any;
 }
 class HealthChart extends Component <HealthChartProps, thisHealthChart> {
   timer = null as null | NodeJS.Timeout;
@@ -108,6 +109,31 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
       frontColor: '#177AD5',
     }))
   };
+  calculateHealthScores2 = (props: HealthChartProps) => {
+    this.setState({
+      healthScore : props.stepArrays[this.props.stepArrays.length-1][4],
+    })
+    if(this.props.stepArrays.length <=7){
+      return props.stepArrays.map((index :StepArrayEntry) => {
+        return{
+          value: index[4],
+          label: index[5]+'일',
+          frontColor: '#177AD5'
+        }
+      });
+    } else {
+      //7개 이상
+      return props.stepArrays.map((index :StepArrayEntry) => {
+        if(this.props.stepArrays.length - index[0] <= 7){
+          return{
+            value: index[4],
+            label: index[5]+'일',
+            frontColor: '#177AD5'
+          }
+        }        
+      });
+    }
+  }
   componentDidMount(): void {
     this.timer = setInterval(() => this.chatUpdate(), 10000);
     const nowDay = this.props.todayDate.getDay();
@@ -120,7 +146,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
   };
   chatUpdate = () => {
     this.setState({
-      healthScores: this.calculateHealthScores(this.props),
+      healthScores: this.calculateHealthScores2(this.props),
     });
     this.doComparison();
   };
