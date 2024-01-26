@@ -12,8 +12,8 @@ import {
 import * as Progress from 'react-native-progress';
 
 const NUM_ITEMS = 15;
-
-interface Props {}
+//step Array [idx, 날짜, 요일, 걸음수, 건강점수, 일자]
+type StepArrayEntry = [number, Date, number, number, number, number]
 type Data = {
   id: string,
   title: string,
@@ -23,6 +23,9 @@ type Data = {
 }
 interface State {
   DataList : Data[]
+}
+interface Props {
+  StepArrays : StepArrayEntry[]
 }
 
 class InfiniteScroll extends React.PureComponent<Props, State>{
@@ -70,7 +73,19 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
         };
     }
     componentDidMount(): void {
-        this.onEndReached();
+        this.onAddPropsData();
+    }
+    onAddPropsData = () => {
+      this.props.StepArrays.map((element :StepArrayEntry) =>{
+        const idxs = element[0].toString()
+        const date = element[1].getFullYear.toString() + element[1].getMonth.toString() + element[1].getDay.toString()
+        const stepCount = element[3]
+        const healthScr = element[4]
+        this.setState({
+          DataList : [...this.state.DataList, {id: idxs, title: idxs + ' th Item', date: date, FinStepCount: stepCount, FinHealthScr: healthScr}]
+        })
+      })
+      
     }
     renderItem2 = ({item} : any) => {
         const myId = item?.id;
@@ -78,7 +93,7 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
         const itemsDate = item.date;
         const doneVideos = item.FinStepCount;
         const totalVideos = item.FinHealthScr;
-        const rate = (doneVideos/ totalVideos) * 100;
+        const rate = (totalVideos/ 100) * 100;
 
         return (
             <View style={styles.item2}>
