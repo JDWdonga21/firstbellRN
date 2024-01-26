@@ -132,7 +132,7 @@ class MainScreen extends Component<MainScreenProps, AppState> {
   }
   barChartChk = () => {
     console.log('바차트 클릭');
-    this.props.navigation.navigate('HealthList', this.stepArrays);
+    this.props.navigation.navigate('HealthList', {stepArrays:  this.stepArrays});
   }
 
   render() {

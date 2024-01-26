@@ -10,14 +10,20 @@ import {
     Button
 } from "react-native"
 import * as Progress from 'react-native-progress';
+import { RouteProp } from "@react-navigation/native";
 
+type HealthListParamList = {
+  HealthList: {
+    stepArrays: StepArrayEntry[]; // 이 부분은 전달하려는 데이터 타입에 따라 변경됩니다.
+  };
+};
 const NUM_ITEMS = 15;
 //step Array [idx, 날짜, 요일, 걸음수, 건강점수, 일자]
 type StepArrayEntry = [number, Date, number, number, number, number]
 type Data = {
   id: string,
   title: string,
-  date: string,
+  date: Date,
   FinStepCount: number,
   FinHealthScr: number,
 }
@@ -25,7 +31,8 @@ interface State {
   DataList : Data[]
 }
 interface Props {
-  StepArrays : StepArrayEntry[]
+  //StepArrays : StepArrayEntry[],
+  route: RouteProp<HealthListParamList, 'HealthList'>;
 }
 
 class InfiniteScroll extends React.PureComponent<Props, State>{
@@ -37,35 +44,35 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
                 {
                     id: '0',
                     title: 'First Item',
-                    date: '',
+                    date: new Date(),
                     FinStepCount: 10,
                     FinHealthScr: 20,
                 },
                 {
                     id: '1',
                     title: 'Second Item',
-                    date: '',
+                    date: new Date(),
                     FinStepCount: 10,
                     FinHealthScr: 30,
                 },
                 {
                     id: '2',
                     title: 'Second Item',
-                    date: '',
+                    date: new Date(),
                     FinStepCount: 10,
                     FinHealthScr: 30,
                 },
                 {
                     id: '3',
                     title: 'Second Item',
-                    date: '',
+                    date: new Date(),
                     FinStepCount: 10,
                     FinHealthScr: 30,
                 },
                 {
                     id: '4',
                     title: 'Second Item',
-                    date: '',
+                    date: new Date(),
                     FinStepCount: 10,
                     FinHealthScr: 30,
                 },
@@ -73,19 +80,22 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
         };
     }
     componentDidMount(): void {
+      if(this.props.route.params.stepArrays){
         this.onAddPropsData();
+      }        
     }
     onAddPropsData = () => {
-      this.props.StepArrays.map((element :StepArrayEntry) =>{
-        const idxs = element[0].toString()
-        const date = element[1].getFullYear.toString() + element[1].getMonth.toString() + element[1].getDay.toString()
-        const stepCount = element[3]
-        const healthScr = element[4]
-        this.setState({
-          DataList : [...this.state.DataList, {id: idxs, title: idxs + ' th Item', date: date, FinStepCount: stepCount, FinHealthScr: healthScr}]
+      if(this.props.route.params.stepArrays){
+        this.props.route.params.stepArrays.map((element :StepArrayEntry) =>{
+          const idxs = element[0].toString()
+          const date = element[1]
+          const stepCount = element[3]
+          const healthScr = element[4]
+          this.setState({
+            DataList : [...this.state.DataList, {id: idxs, title: idxs + ' th Item', date: date, FinStepCount: stepCount, FinHealthScr: healthScr}]
+          })
         })
-      })
-      
+      }      
     }
     renderItem2 = ({item} : any) => {
         const myId = item?.id;
@@ -126,10 +136,10 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
         if (100 >= this.state.DataList.length && this.isLoading === false){
             this.isLoading = true;
             console.log("늘어나라 얍!")
-            const idxs = this.state.DataList.length.toString();
+            const idxs = this.state.DataList.length.toString()
             const doneVideo = this.state.DataList.length
             this.setState({
-                DataList : [...this.state.DataList, {id: idxs, title: idxs + ' th Item', date: '여기타임스템프', FinStepCount: doneVideo, FinHealthScr: doneVideo + 100,}]
+                DataList : [...this.state.DataList, {id: idxs, title: idxs + ' th Item', date: new Date(), FinStepCount: doneVideo, FinHealthScr: doneVideo + 100,}]
             })
             this.isLoading = false
         }
