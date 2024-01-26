@@ -110,9 +110,14 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
     }))
   };
   calculateHealthScores2 = (props: HealthChartProps) => {
-    this.setState({
-      healthScore : props.stepArrays[this.props.stepArrays.length-1][4],
-    })
+    // try{
+    //   this.setState({
+    //     healthScore : props.stepArrays[this.props.stepArrays.length-1][4]
+    //   })
+    // }catch(err){
+    //   console.log(err, props.stepArrays[this.props.stepArrays.length-1])
+    // }
+    
     if(this.props.stepArrays.length <=7){
       return props.stepArrays.map((index :StepArrayEntry) => {
         return{
@@ -167,7 +172,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
           <Text style={styles.textStyle}>{this.state.ages}대 {womanAverage[this.state.keywordCode]} {this.state.differenceValue}{averageComparison[this.state.keywordCode]}</Text>
         </View>
         <View
-          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+          style={{flex: 1, justifyContent: 'center'}}
         >
           <PlatformTouchable
             onPress={this.barChartChk}

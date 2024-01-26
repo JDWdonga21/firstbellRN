@@ -44,12 +44,12 @@ type AdditionalInfo = Partial<ParsedStepCountData>;
 
 // 이미지 에셋
 import Heart from '../../../assets/icons/heart.svg';
-
+type StepArrayEntry = [number, Date, number, number, number, number];
 type SituationProps = {
   age: number;
   male: number;
   stepWeek: number[][];
-  //healthScore: number;
+  stepArrays: StepArrayEntry[];
   todayDate: Date;
   //conditionCode: number;
 }
@@ -140,6 +140,12 @@ class Situation1 extends Component<SituationProps, thisSituation> {
     await this.stopStepCounter();
     console.log("저장되는 걸음 수 : ", this.resultCounter.newSteps);
     await AsyncStorage.setItem('stepCount', JSON.stringify(this.resultCounter));
+    this.stepCounter.mySteps = 0;
+    this.resultCounter.newSteps = 0;
+    this.setState({
+      onSteps: 0,
+      stepCount: 0,
+    })
   };
 
   isPedometerSupported = () => {
@@ -228,6 +234,9 @@ class Situation1 extends Component<SituationProps, thisSituation> {
       this.props.stepWeek[this.state.todayDate.getDay()][0] = this.state.todayDate.getDate();
       this.props.stepWeek[this.state.todayDate.getDay()][1] = this.resultCounter.newSteps;
       this.props.stepWeek[this.state.todayDate.getDay()][2] = resultScr;
+      //
+      this.props.stepArrays[this.props.stepArrays.length - 1][3] = this.resultCounter.newSteps;
+      this.props.stepArrays[this.props.stepArrays.length - 1][4] = resultScr;
       this.setState({
         healthScore: resultScr
       })    

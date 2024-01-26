@@ -15,10 +15,12 @@ import Body from './body/Body';
 import Footer from './footers/Footer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type MainScreenProps = {
   navigation: StackNavigationProp<any, 'Main'>; // Replace 'any' with your ParamList if you have one
 };
+type StepArrayEntry = [number, Date, number, number, number, number];
 type AppState = {
   name: string,
   age: number,
@@ -62,6 +64,10 @@ class MainScreen extends Component<MainScreenProps, AppState> {
     };
   }
 
+  stepArrays : StepArrayEntry[] = [
+
+  ]
+
   toastTimer = null as null | NodeJS.Timeout;
 
   showtoast = () => {
@@ -79,17 +85,36 @@ class MainScreen extends Component<MainScreenProps, AppState> {
     }, 2000);
   };
 
-  componentDidMount() {
+  // async componentDidMount() {
+  //   const storedWeek = await AsyncStorage.getItem('weekSteps');
+  //   if(storedWeek !== null){
+  //     this.stepWeek = JSON.parse(storedWeek);
+  //   }
+  //   const storedStepArray = await AsyncStorage.getItem('stepArrays');
+  //   if(storedStepArray !== null){
+  //     this.stepArrays = JSON.parse(storedStepArray);
+  //   }
+  //   this.todayStepArray();
+  // }
+  // async componentWillUnmount() {
+  //   await AsyncStorage.setItem('weekSteps', JSON.stringify(this.stepWeek));
+  // }
+  async componentDidMount() {
     this.timer = setInterval(() => this.tick(), 1000);
+    const storedStepArray = await AsyncStorage.getItem('stepArrays');
+    if(storedStepArray !== null){
+      this.stepArrays = JSON.parse(storedStepArray);
+    }
   }  
   // Clear the timer when the component unmounts
-  componentWillUnmount() {
+  async componentWillUnmount() {
     if (this.toastTimer) {
       clearTimeout(this.toastTimer);
     }
     if (this.timer) {
       clearInterval(this.timer);
     }
+    await AsyncStorage.setItem('stepArrays', JSON.stringify(this.stepArrays));
   }
   tick() {
     const newTime = new Date();
@@ -107,7 +132,7 @@ class MainScreen extends Component<MainScreenProps, AppState> {
   }
   barChartChk = () => {
     console.log('바차트 클릭');
-    this.props.navigation.navigate('HealthList');
+    this.props.navigation.navigate('HealthList', this.stepArrays);
   }
 
   render() {
@@ -127,7 +152,7 @@ class MainScreen extends Component<MainScreenProps, AppState> {
                 name={this.state.name} 
                 age={this.state.age}
                 male={this.state.male}
-                // healthScore={this.state.healthScore}
+                stepArrays={this.stepArrays}
                 todayDate = {this.state.todayDate}
                 onHealthList = {this.barChartChk}
                 onBedtime = {this.state.onBedtime}
