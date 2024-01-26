@@ -100,7 +100,7 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
     renderItem2 = ({item} : any) => {
         const myId = item?.id;
         const categoryTitle = item?.title;
-        const itemsDate = item.date;
+        const itemsDate = item.date.toLocaleString();
         const doneVideos = item.FinStepCount;
         const totalVideos = item.FinHealthScr;
         const rate = (totalVideos/ 100) * 100;
