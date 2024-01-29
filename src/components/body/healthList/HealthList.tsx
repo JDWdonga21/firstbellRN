@@ -84,16 +84,21 @@ class InfiniteScroll extends React.PureComponent<Props, State>{
         this.onAddPropsData();
       }        
     }
-    onAddPropsData = () => {
+    onAddPropsData = async () => {
       if(this.props.route.params.stepArrays){
+        console.log("맴맴 : ", this.props.route.params.stepArrays)
+        const addArr : Data[] = [];
         this.props.route.params.stepArrays.map((element :StepArrayEntry) =>{
-          const idxs = element[0].toString()
+          console.log("세부 : ", element);
+          const idxs = (this.state.DataList.length + addArr.length).toString()
           const date = element[1]
           const stepCount = element[3]
           const healthScr = element[4]
-          this.setState({
-            DataList : [...this.state.DataList, {id: idxs, title: idxs + ' th Item', date: date, FinStepCount: stepCount, FinHealthScr: healthScr}]
-          })
+          
+          addArr.push({id: idxs, title: idxs + ' th Item', date: date, FinStepCount: stepCount, FinHealthScr: healthScr},)
+        })
+        this.setState({
+          DataList : [...this.state.DataList, ...addArr]
         })
       }      
     }

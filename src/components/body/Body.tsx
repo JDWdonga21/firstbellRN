@@ -13,17 +13,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type BodyProps = {
   name: string;
-  age: number
+  age: number;
   male: number;
   todayDate: Date;
-  onBedtime: Date,
-  onWakeUptime: Date,
-  onSleeptimes: number,
-  onSleepmins: number,
-  stepArrays: StepArrayEntry[],
-  onHealthList: () => void,
+  onBedtime: Date;
+  onWakeUptime: Date;
+  onSleeptimes: number;
+  onSleepmins: number;
+  stepArrays: StepArrayEntry[];
+  onHealthList: () => void;
 };
-type StepArrayEntry = [number, Date, number, number, number, number]
+type StepArrayEntry = [number, Date, number, number, number, number];
 class Body extends Component<BodyProps> {
   //7day step [날짜, 걸음수, 건강점수] 일~토
   stepWeek = [
@@ -44,15 +44,15 @@ class Body extends Component<BodyProps> {
     if(storedWeek !== null){
       this.stepWeek = JSON.parse(storedWeek);
     }
-    // const storedStepArray = await AsyncStorage.getItem('stepArrays');
+    const storedStepArray = await AsyncStorage.getItem('stepArrays');
     // if(storedStepArray !== null){
     //   this.stepArrays = JSON.parse(storedStepArray);
     // }
-    this.todayStepArray();
+    await this.todayStepArray();
   }
   async componentWillUnmount() {
     await AsyncStorage.setItem('weekSteps', JSON.stringify(this.stepWeek));
-    // await AsyncStorage.setItem('stepArrays', JSON.stringify(this.stepArray));
+    //await AsyncStorage.setItem('stepArrays', JSON.stringify(this.stepArrays));
   }
 
   todayStepArray = () => {
@@ -62,10 +62,13 @@ class Body extends Component<BodyProps> {
     }
     const todayDate = this.props.todayDate;
     const todayDateString = todayDate.toISOString().split('T')[0]; //YYYY-MM-DD 형식
+    console.log("todayDateString : ", todayDateString);
 
     if(this.props.stepArrays.length > 0){
       const lastEntry = this.props.stepArrays[this.props.stepArrays.length - 1];
       const lastDateString = new Date(lastEntry[1]).toISOString().split('T')[0];
+
+      console.log("lastDateString : ", lastDateString);
 
       if (todayDateString !== lastDateString) {
         this.props.stepArrays.push([this.props.stepArrays.length, todayDate, todayDate.getDay(), 0, 0, todayDate.getDate()]);
@@ -75,6 +78,7 @@ class Body extends Component<BodyProps> {
     }
   }
   testFunc = () =>{
+    this.todayStepArray()
     if(this.props.stepArrays){
       this.props.stepArrays.forEach(element => {
         console.log("----- - ------ - --------");
