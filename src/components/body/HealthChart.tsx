@@ -110,13 +110,13 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
     }))
   };
   calculateHealthScores2 = (props: HealthChartProps) => {
-    // try{
-    //   this.setState({
-    //     healthScore : props.stepArrays[this.props.stepArrays.length-1][4]
-    //   })
-    // }catch(err){
-    //   console.log(err, props.stepArrays[this.props.stepArrays.length-1])
-    // }
+    try{
+      this.setState({
+        healthScore : props.stepArrays[this.props.stepArrays.length-1][4],
+      })
+    }catch(err){
+      console.log(err, props.stepArrays[this.props.stepArrays.length-1])
+    }
     
     if(this.props.stepArrays.length <=7){
       return props.stepArrays.map((index :StepArrayEntry) => {
