@@ -40,6 +40,7 @@ type AppState = {
 
 class MainScreen extends Component<MainScreenProps, AppState> {
   timer = null as null |  NodeJS.Timeout;
+  isDataLoading = true as boolean
   constructor(props: MainScreenProps) {
     super(props);
     this.state = {
@@ -105,6 +106,7 @@ class MainScreen extends Component<MainScreenProps, AppState> {
     if(storedStepArray !== null){
       this.stepArrays = JSON.parse(storedStepArray);
     }
+    await this.todayStepArray();
   }  
   // Clear the timer when the component unmounts
   async componentWillUnmount() {
@@ -116,6 +118,32 @@ class MainScreen extends Component<MainScreenProps, AppState> {
     }
     await AsyncStorage.setItem('stepArrays', JSON.stringify(this.stepArrays));
   }
+
+  todayStepArray = () => {
+    if(!(this.state.todayDate instanceof Date)) {
+      console.error('todayDate is not a valid Date object');
+      return;
+    }
+    const todayDate = this.state.todayDate;
+    const todayDateString = todayDate.toISOString().split('T')[0]; //YYYY-MM-DD 형식
+    console.log("todayDateString : ", todayDateString);
+
+    if(this.stepArrays.length > 0){
+      const lastEntry = this.stepArrays[this.stepArrays.length - 1];
+      const lastDateString = new Date(lastEntry[1]).toISOString().split('T')[0];
+
+      console.log("lastDateString : ", lastDateString);
+
+      if (todayDateString !== lastDateString) {
+        this.stepArrays.push([this.stepArrays.length, todayDate, todayDate.getDay(), 0, 0, todayDate.getDate()]);
+      }
+    } else{
+      this.stepArrays.push([0, todayDate, todayDate.getDay(), 0, 0, todayDate.getDate()]);
+    }
+    this.isDataLoading = false;
+  }
+  
+
   tick() {
     const newTime = new Date();
     //const sleepTime = this.state.onWakeUptime.getTime() - this.state.onBedtime.getTime();
@@ -159,6 +187,7 @@ class MainScreen extends Component<MainScreenProps, AppState> {
                 onWakeUptime = {this.state.onWakeUptime}
                 onSleeptimes = {this.state.onSleeptimes}
                 onSleepmins = {this.state.onSleepmins}
+                isDataLoading = {this.isDataLoading}
               />
               <Footer />
             </ScrollView>

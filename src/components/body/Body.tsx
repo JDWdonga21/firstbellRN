@@ -21,64 +21,64 @@ type BodyProps = {
   onSleeptimes: number;
   onSleepmins: number;
   stepArrays: StepArrayEntry[];
+  isDataLoading: boolean;
   onHealthList: () => void;
 };
 type StepArrayEntry = [number, Date, number, number, number, number];
 class Body extends Component<BodyProps> {
   //7day step [날짜, 걸음수, 건강점수] 일~토
-  stepWeek = [
-    [0, 0, 0],
-    [1, 0, 0],
-    [2, 0, 0],
-    [3, 0, 0],
-    [4, 0, 0],
-    [5, 0, 0],
-    [6, 0, 0]
-  ]
+  // stepWeek = [
+  //   [0, 0, 0],
+  //   [1, 0, 0],
+  //   [2, 0, 0],
+  //   [3, 0, 0],
+  //   [4, 0, 0],
+  //   [5, 0, 0],
+  //   [6, 0, 0]
+  // ]
   //step Array [idx, 날짜, 요일, 걸음수, 건강점수, 일자]
   // stepArrays : StepArrayEntry[] = [
 
   // ]
   async componentDidMount() {
-    const storedWeek = await AsyncStorage.getItem('weekSteps');
-    if(storedWeek !== null){
-      this.stepWeek = JSON.parse(storedWeek);
-    }
-    const storedStepArray = await AsyncStorage.getItem('stepArrays');
+    // const storedWeek = await AsyncStorage.getItem('weekSteps');
+    // if(storedWeek !== null){
+    //   this.stepWeek = JSON.parse(storedWeek);
+    // }
+    // const storedStepArray = await AsyncStorage.getItem('stepArrays');
     // if(storedStepArray !== null){
     //   this.stepArrays = JSON.parse(storedStepArray);
-    // }
-    await this.todayStepArray();
+    // }    
   }
   async componentWillUnmount() {
-    await AsyncStorage.setItem('weekSteps', JSON.stringify(this.stepWeek));
+    //await AsyncStorage.setItem('weekSteps', JSON.stringify(this.stepWeek));
     //await AsyncStorage.setItem('stepArrays', JSON.stringify(this.stepArrays));
   }
 
-  todayStepArray = () => {
-    if(!(this.props.todayDate instanceof Date)) {
-      console.error('todayDate is not a valid Date object');
-      return;
-    }
-    const todayDate = this.props.todayDate;
-    const todayDateString = todayDate.toISOString().split('T')[0]; //YYYY-MM-DD 형식
-    console.log("todayDateString : ", todayDateString);
+  // todayStepArray = () => {
+  //   if(!(this.props.todayDate instanceof Date)) {
+  //     console.error('todayDate is not a valid Date object');
+  //     return;
+  //   }
+  //   const todayDate = this.props.todayDate;
+  //   const todayDateString = todayDate.toISOString().split('T')[0]; //YYYY-MM-DD 형식
+  //   console.log("todayDateString : ", todayDateString);
 
-    if(this.props.stepArrays.length > 0){
-      const lastEntry = this.props.stepArrays[this.props.stepArrays.length - 1];
-      const lastDateString = new Date(lastEntry[1]).toISOString().split('T')[0];
+  //   if(this.props.stepArrays.length > 0){
+  //     const lastEntry = this.props.stepArrays[this.props.stepArrays.length - 1];
+  //     const lastDateString = new Date(lastEntry[1]).toISOString().split('T')[0];
 
-      console.log("lastDateString : ", lastDateString);
+  //     console.log("lastDateString : ", lastDateString);
 
-      if (todayDateString !== lastDateString) {
-        this.props.stepArrays.push([this.props.stepArrays.length, todayDate, todayDate.getDay(), 0, 0, todayDate.getDate()]);
-      }
-    } else{
-      this.props.stepArrays.push([0, todayDate, todayDate.getDay(), 0, 0, todayDate.getDate()]);
-    }
-  }
+  //     if (todayDateString !== lastDateString) {
+  //       this.props.stepArrays.push([this.props.stepArrays.length, todayDate, todayDate.getDay(), 0, 0, todayDate.getDate()]);
+  //     }
+  //   } else{
+  //     this.props.stepArrays.push([0, todayDate, todayDate.getDay(), 0, 0, todayDate.getDate()]);
+  //   }
+  // }
   testFunc = () =>{
-    this.todayStepArray()
+    //this.todayStepArray()
     if(this.props.stepArrays){
       this.props.stepArrays.forEach(element => {
         console.log("----- - ------ - --------");
@@ -95,8 +95,9 @@ class Body extends Component<BodyProps> {
           age={this.props.age}
           male={this.props.male}   
           todayDate={this.props.todayDate}  
-          stepWeek={this.stepWeek}
+          //stepWeek={this.stepWeek}
           stepArrays={this.props.stepArrays}
+          isDataLoading={this.props.isDataLoading}
         />
         {/* <Situation2 
           name={this.props.name} 
@@ -108,7 +109,7 @@ class Body extends Component<BodyProps> {
         <HealthChart 
           male={this.props.male}
           todayDate={this.props.todayDate}
-          stepWeek={this.stepWeek}
+          //stepWeek={this.stepWeek}
           stepArrays={this.props.stepArrays}
           onHealthList = {this.props.onHealthList}
         />

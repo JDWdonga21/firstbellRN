@@ -43,7 +43,7 @@ type StepArrayEntry = [number, Date, number, number, number, number];
 type HealthChartProps = {
   male: number,
   todayDate: Date,
-  stepWeek: number[][],
+  //stepWeek: number[][],
   stepArrays: StepArrayEntry[],
   onHealthList: () => void,
 }
@@ -67,7 +67,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
       averageHealthScore: 65,
       differenceValue: 0,
       keywordCode: 0,
-      healthScores: this.calculateHealthScores(props)
+      healthScores: defhealthScore
     };
   };
   doComparison = () => {
@@ -98,17 +98,17 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
       return todayWeekday - (6 - _index);
     }
   };
-  calculateHealthScores = (props: HealthChartProps) => {
-    console.log("차트 업!");
-    this.setState({
-      healthScore : props.stepWeek[this.props.todayDate.getDay()][2],
-    })
-    return lastWeekDates.map((date, index) => ({
-      value: props.stepWeek[this.makeIndex(index)][2],
-      label: date,
-      frontColor: '#177AD5',
-    }))
-  };
+  // calculateHealthScores = (props: HealthChartProps) => {
+  //   console.log("차트 업!");
+  //   this.setState({
+  //     healthScore : props.stepWeek[this.props.todayDate.getDay()][2],
+  //   })
+  //   return lastWeekDates.map((date, index) => ({
+  //     value: props.stepWeek[this.makeIndex(index)][2],
+  //     label: date,
+  //     frontColor: '#177AD5',
+  //   }))
+  // };
   calculateHealthScores2 = (props: HealthChartProps) => {
     try{
       this.setState({

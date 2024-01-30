@@ -48,7 +48,8 @@ type StepArrayEntry = [number, Date, number, number, number, number];
 type SituationProps = {
   age: number;
   male: number;
-  stepWeek: number[][];
+  //stepWeek: number[][];
+  isDataLoading: boolean;
   stepArrays: StepArrayEntry[];
   todayDate: Date;
   //conditionCode: number;
@@ -57,7 +58,7 @@ type thisSituation = {
   healthScore: number,
   todayDate: Date,
   onSteps: number,
-  stepWeeks: number[][],
+  //stepWeeks: number[][],
   stepCount: number,
   //
   loaded: boolean,
@@ -96,7 +97,7 @@ class Situation1 extends Component<SituationProps, thisSituation> {
     this.state = {
       healthScore: 0,
       todayDate: this.props.todayDate,
-      stepWeeks: this.props.stepWeek,
+      //stepWeeks: this.props.stepWeek,
       //오늘 걸음 수
       onSteps : 0,
       //
@@ -231,12 +232,15 @@ class Situation1 extends Component<SituationProps, thisSituation> {
     const averageStep = this.averageNumStep(this.props.age, this.props.male);
     if (averageStep !== undefined){
       const resultScr = await Math.floor((this.resultCounter.newSteps / averageStep) * 100);
-      this.props.stepWeek[this.state.todayDate.getDay()][0] = this.state.todayDate.getDate();
-      this.props.stepWeek[this.state.todayDate.getDay()][1] = this.resultCounter.newSteps;
-      this.props.stepWeek[this.state.todayDate.getDay()][2] = resultScr;
       //
-      this.props.stepArrays[this.props.stepArrays.length - 1][3] = this.resultCounter.newSteps;
-      this.props.stepArrays[this.props.stepArrays.length - 1][4] = resultScr;
+      // this.props.stepWeek[this.state.todayDate.getDay()][0] = this.state.todayDate.getDate();
+      // this.props.stepWeek[this.state.todayDate.getDay()][1] = this.resultCounter.newSteps;
+      // this.props.stepWeek[this.state.todayDate.getDay()][2] = resultScr;
+      //
+      if(this.props.isDataLoading !== true){
+        this.props.stepArrays[this.props.stepArrays.length - 1][3] = this.resultCounter.newSteps;
+        this.props.stepArrays[this.props.stepArrays.length - 1][4] = resultScr;
+      }      
       this.setState({
         healthScore: resultScr
       })    
@@ -261,13 +265,13 @@ class Situation1 extends Component<SituationProps, thisSituation> {
   };
 
   healthInfo = () => {
-    if(this.props.stepWeek){
-      this.props.stepWeek.forEach(element => {
-        console.log("---- - ---- - ----");
-        console.log(element);
-      });
-      console.log("---- - ---- - ----");
-    }
+    // if(this.props.stepWeek){
+    //   this.props.stepWeek.forEach(element => {
+    //     console.log("---- - ---- - ----");
+    //     console.log(element);
+    //   });
+    //   console.log("---- - ---- - ----");
+    // }
   };
 
   render(){
