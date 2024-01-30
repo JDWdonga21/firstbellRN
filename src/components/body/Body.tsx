@@ -90,7 +90,7 @@ class Body extends Component<BodyProps> {
   render() {
     return(
       <View >
-        <Button title='dddd' onPress={this.testFunc} />
+        {/* <Button title='dddd' onPress={this.testFunc} /> */}
         <Situation1          
           age={this.props.age}
           male={this.props.male}   
