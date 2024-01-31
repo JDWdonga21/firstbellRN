@@ -16,9 +16,10 @@ import Footer from './footers/Footer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 type MainScreenProps = {
-  navigation: StackNavigationProp<any, 'Main'>; // Replace 'any' with your ParamList if you have one
+  navigation: StackNavigationProp<any, 'Main'> & DrawerNavigationProp<any, 'Main'>; // Replace 'any' with your ParamList if you have one
 };
 type StepArrayEntry = [number, Date, number, number, number, number];
 type AppState = {
@@ -162,6 +163,9 @@ class MainScreen extends Component<MainScreenProps, AppState> {
     console.log('바차트 클릭');
     this.props.navigation.navigate('HealthList', {stepArrays:  this.stepArrays});
   }
+  openDrawMenu = () => {
+    this.props.navigation.openDrawer();
+  }
 
   render() {
     return (      
@@ -174,6 +178,7 @@ class MainScreen extends Component<MainScreenProps, AppState> {
                 name={this.state.name} 
                 address={this.state.address}
                 temperatures={this.state.temperatures}
+                openDrawerMenu={this.openDrawMenu}
               />
               {/* <Button title='ddd' onPress={this.barChartChk} /> */}
               <Body 

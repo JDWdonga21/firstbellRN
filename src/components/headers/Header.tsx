@@ -42,6 +42,7 @@ type HeaderProps = {
   name: string;
   address: string
   temperatures: number;
+  openDrawerMenu: () => void;
 };
 type Headers = {
   isPermitted: boolean;
@@ -183,6 +184,10 @@ class Header extends Component<HeaderProps, Headers> {
     this.setState({isPermitted: true}, );
   };
 
+  menuBar = () => {
+    this.props.openDrawerMenu();
+  }
+
   changeWeather = (_weatherCode : string) => {
     if(_weatherCode === '01d' || _weatherCode === '01n'){
       this.setState({ weathersIdx: 0 })
@@ -262,7 +267,7 @@ class Header extends Component<HeaderProps, Headers> {
           <View style={[styles.overlappingMenuBar, {paddingTop: 30,}]}>
             <View style={[styles.Menuicon, {borderRadius: 20,}]}>
               <PlatformTouchable
-                onPress={this.geoLocation}
+                onPress={this.menuBar}
                 background={
                   PlatformTouchable.Ripple('gray', true)
                 }

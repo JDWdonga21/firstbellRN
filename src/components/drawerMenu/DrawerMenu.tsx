@@ -8,7 +8,7 @@ type DrawerMenuProps = {
 class DrawerMenu extends Component<DrawerMenuProps>{
     render() {
         return(
-            <View>
+            <View style={{flex: 1, padding: 20, backgroundColor: 'gray'}}>
                 <Text>드로우 메뉴</Text>
             </View>
         )        
