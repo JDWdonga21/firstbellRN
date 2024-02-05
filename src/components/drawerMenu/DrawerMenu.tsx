@@ -15,43 +15,49 @@ class DrawerMenu extends Component<DrawerMenuProps>{
                         메뉴
                     </Text>
                 </View>
-                <View style={styles.bodys}>                    
-                    <PlatformTouchable
-                        onPress={() => {}}
-                        background={
-                            PlatformTouchable.Ripple('#ff0000', false)
-                        }
-                    >
-                        <View style={{margin: 10, padding: 5}}>
-                            <Text style={styles.bodyText}>
-                                메뉴 1
-                            </Text>
-                        </View>                        
-                    </PlatformTouchable>
-                    <PlatformTouchable
-                        onPress={() => {}}
-                        background={
-                            PlatformTouchable.Ripple('#00ff00', false)
-                        }
-                    >
-                        <View style={{margin: 10, padding: 5}}>
-                            <Text style={styles.bodyText}>
-                                메뉴 2
-                            </Text>
-                        </View>                        
-                    </PlatformTouchable>
-                    <PlatformTouchable
-                        onPress={() => {}}
-                        background={
-                            PlatformTouchable.Ripple('#0000ff', false)
-                        }
-                    >
-                        <View style={{margin: 10, padding: 5}}>
-                            <Text style={styles.bodyText}>
-                                메뉴 3
-                            </Text>
-                        </View>                        
-                    </PlatformTouchable>
+                <View style={styles.bodys}>    
+                    <View style={{marginTop: 15}}>
+                        <PlatformTouchable
+                            onPress={() => {}}
+                            background={
+                                PlatformTouchable.Ripple('#ff0000', false)
+                            }
+                        >
+                            <View style={{margin: 10, padding: 5}}>
+                                <Text style={styles.bodyText}>
+                                    메뉴 1
+                                </Text>
+                            </View>                        
+                        </PlatformTouchable>
+                    </View>    
+                    <View style={{marginTop: 15}}>
+                        <PlatformTouchable
+                            onPress={() => {}}
+                            background={
+                                PlatformTouchable.Ripple('#00ff00', false)
+                            }
+                        >
+                            <View style={{margin: 10, padding: 5}}>
+                                <Text style={styles.bodyText}>
+                                    메뉴 2
+                                </Text>
+                            </View>                        
+                        </PlatformTouchable>
+                    </View>
+                    <View style={{marginTop: 15}}>
+                        <PlatformTouchable
+                            onPress={() => {}}
+                            background={
+                                PlatformTouchable.Ripple('#0000ff', false)
+                            }
+                        >
+                            <View style={{margin: 10, padding: 5}}>
+                                <Text style={styles.bodyText}>
+                                    메뉴 3
+                                </Text>
+                            </View>                        
+                        </PlatformTouchable>
+                    </View> 
                 </View>
                 <View style={styles.footer}>
                     <View>
