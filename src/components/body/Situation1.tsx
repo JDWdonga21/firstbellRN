@@ -139,8 +139,7 @@ class Situation1 extends Component<SituationProps, thisSituation> {
   };
   async componentWillUnmount() {
     await this.stopStepCounter();
-    console.log("저장되는 걸음 수 : ", this.resultCounter.newSteps);
-    await AsyncStorage.setItem('stepCount', JSON.stringify(this.resultCounter));
+    await this.onSaveSteps();
     this.stepCounter.mySteps = 0;
     this.resultCounter.newSteps = 0;
     this.setState({
@@ -148,6 +147,11 @@ class Situation1 extends Component<SituationProps, thisSituation> {
       stepCount: 0,
     })
   };
+
+  onSaveSteps = () => {
+    console.log("저장되는 걸음 수 : ", this.resultCounter.newSteps);
+    AsyncStorage.setItem('stepCount', JSON.stringify(this.resultCounter));
+  }
 
   isPedometerSupported = () => {
     isStepCountingSupported().then(result =>{
@@ -240,7 +244,8 @@ class Situation1 extends Component<SituationProps, thisSituation> {
       if(this.props.isDataLoading !== true){
         this.props.stepArrays[this.props.stepArrays.length - 1][3] = this.resultCounter.newSteps;
         this.props.stepArrays[this.props.stepArrays.length - 1][4] = resultScr;
-      }      
+      }     
+      this.onSaveSteps(); 
       this.setState({
         healthScore: resultScr
       })    

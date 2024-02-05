@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {
   Text,
-  Image,
   View,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 import PlatformTouchable from 'react-native-platform-touchable';
 
@@ -13,13 +11,13 @@ import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
 
 
 const defhealthScore = [ 
+  {value:10, label: "0일", frontColor: '#FE642E'}, 
+  {value:20, label: "0일", frontColor: '#FE642E'}, 
+  {value:30, label: "0일", frontColor: '#177AD5'}, 
+  {value:40, label: "0일", frontColor: '#177AD5'}, 
   {value:50, label: "0일", frontColor: '#177AD5'}, 
-  {value:50, label: "0일", frontColor: '#177AD5'}, 
-  {value:50, label: "0일", frontColor: '#177AD5'}, 
-  {value:50, label: "0일", frontColor: '#177AD5'}, 
-  {value:50, label: "0일", frontColor: '#177AD5'}, 
-  {value:50, label: "0일", frontColor: '#177AD5'}, 
-  {value:50, label: "0일", frontColor: '#177AD5'} 
+  {value:60, label: "0일", frontColor: '#177AD5'}, 
+  {value:70, label: "0일", frontColor: '#177AD5'} 
 ]
 //날짜를 표시하는 함수
 const getFormattedDate = (date : Date) => {
@@ -43,7 +41,6 @@ type StepArrayEntry = [number, Date, number, number, number, number];
 type HealthChartProps = {
   male: number,
   todayDate: Date,
-  //stepWeek: number[][],
   stepArrays: StepArrayEntry[],
   onHealthList: () => void,
 }
@@ -54,7 +51,7 @@ type thisHealthChart = {
   averageHealthScore: number,
   differenceValue: number | null,
   keywordCode: number,
-  healthScores: { value: number, label: string, frontColor: string }[] | null | any[];
+  healthScores: { value: number, label: string, frontColor: string }[] | any;
 }
 class HealthChart extends Component <HealthChartProps, thisHealthChart> {
   timer = null as null | NodeJS.Timeout;
@@ -98,17 +95,7 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
       return todayWeekday - (6 - _index);
     }
   };
-  // calculateHealthScores = (props: HealthChartProps) => {
-  //   console.log("차트 업!");
-  //   this.setState({
-  //     healthScore : props.stepWeek[this.props.todayDate.getDay()][2],
-  //   })
-  //   return lastWeekDates.map((date, index) => ({
-  //     value: props.stepWeek[this.makeIndex(index)][2],
-  //     label: date,
-  //     frontColor: '#177AD5',
-  //   }))
-  // };
+  
   calculateHealthScores2 = (props: HealthChartProps) => {
     try{
       this.setState({
@@ -117,27 +104,48 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
     }catch(err){
       console.log(err, props.stepArrays[this.props.stepArrays.length-1])
     }
-    
-    if(this.props.stepArrays.length <=7){
-      return props.stepArrays.map((index :StepArrayEntry) => {
-        return{
-          value: index[4],
-          label: index[5]+'일',
-          frontColor: '#177AD5'
-        }
-      });
-    } else {
-      //7개 이상
-      return props.stepArrays.map((index :StepArrayEntry) => {
-        if(this.props.stepArrays.length - index[0] <= 7){
-          return{
-            value: index[4],
-            label: index[5]+'일',
-            frontColor: '#177AD5'
-          }
-        }        
-      });
-    }
+    try{
+      if(this.props.stepArrays.length <=7){
+        return props.stepArrays.map((index :StepArrayEntry) => {
+          if(index !== undefined){
+            if(index[2] === 0 || index[2] === 6){
+              return{
+                value: index[4],
+                label: index[5]+'일',
+                frontColor: '#FE642E'
+              }
+            }else{
+              return{
+                value: index[4],
+                label: index[5]+'일',
+                frontColor: '#177AD5'
+              }
+            }
+          }        
+        });
+      } else {
+        //7개 이상
+        return props.stepArrays.slice(-7).map((index :StepArrayEntry) => {
+          if(index !== undefined){
+            if(index[2] === 0 || index[2] === 6){
+              return{
+                value: index[4],
+                label: index[5]+'일',
+                frontColor: '#FE642E'
+              }
+            }else{
+              return{
+                value: index[4],
+                label: index[5]+'일',
+                frontColor: '#177AD5'
+              }
+            }            
+          }        
+        });
+      }
+    } catch(err){
+      console.error("차트 에러", err);
+    }    
   }
   componentDidMount(): void {
     this.timer = setInterval(() => this.chatUpdate(), 10000);

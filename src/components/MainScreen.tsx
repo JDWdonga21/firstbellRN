@@ -41,7 +41,8 @@ type AppState = {
 
 class MainScreen extends Component<MainScreenProps, AppState> {
   timer = null as null |  NodeJS.Timeout;
-  isDataLoading = true as boolean
+  isDataLoading = true as boolean;
+  isCountSave = 0 as number;
   constructor(props: MainScreenProps) {
     super(props);
     this.state = {
@@ -117,7 +118,14 @@ class MainScreen extends Component<MainScreenProps, AppState> {
     if (this.timer) {
       clearInterval(this.timer);
     }
-    await AsyncStorage.setItem('stepArrays', JSON.stringify(this.stepArrays));
+    await this.onSaveStepArray();
+  }
+
+  onSaveStepArray = () => {
+    if(this.isDataLoading === false){
+      console.log("걸음 수 배열 저장");
+      AsyncStorage.setItem('stepArrays', JSON.stringify(this.stepArrays));
+    }    
   }
 
   todayStepArray = () => {
@@ -157,7 +165,15 @@ class MainScreen extends Component<MainScreenProps, AppState> {
       onSleeptime: sleepTime,
       onSleeptimes: sleepHours,
       onSleepmins: sleepMins,
-    });    
+    });   
+    this.onSaveCount();
+  }
+  onSaveCount = () => {
+    this.isCountSave = this.isCountSave + 1
+    if(this.isCountSave >= 180){
+      this.onSaveStepArray();
+      this.isCountSave = 0;
+    }    
   }
   barChartChk = () => {
     console.log('바차트 클릭');
