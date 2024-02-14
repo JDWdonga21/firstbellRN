@@ -7,8 +7,43 @@ import {
 import PlatformTouchable from 'react-native-platform-touchable';
 
 import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
+import {
+  ProgressChart,
+  ContributionGraph
+} from "react-native-chart-kit";
+import { ContributionChartValue } from 'react-native-chart-kit/dist/contribution-graph/ContributionGraph';
+import { RectProps } from 'react-native-svg';
+//import { opacity } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
+const chartConfig = {
+  backgroundGradientFrom: "#1E2923",
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: "#08130D",
+  backgroundGradientToOpacity: 0,
+  color: (opacity = 1) => `rgba(255, 100, 0, ${opacity})`,
+  strokeWidth: 2,
+  barPercentage: 0.5,
+  useShadowColorFromDataset: false
+};
 
+const commitsData = [
+  {date: "2024-02-06", count: 1},
+  {date: "2024-02-07", count: 2},
+  {date: "2024-02-08", count: 2},
+  {date: "2024-02-09", count: 3},
+  {date: "2024-02-10", count: 3},
+  {date: "2024-02-11", count: 3},
+  {date: "2024-02-12", count: 4},
+  {date: "2024-02-13", count: 4},
+  {date: "2024-02-14", count: 4},
+  {date: "2024-02-15", count: 4},
+  {date: "2024-02-16", count: 4},
+];
+
+const progressData = {
+  labels: ["HealthScore1", "HealthScore2", "HealthScore3"],
+  data: [0.4, 0.6, 0.8],
+};
 
 const defhealthScore = [ 
   {value:10, label: "0일", frontColor: '#FE642E'}, 
@@ -204,13 +239,31 @@ class HealthChart extends Component <HealthChartProps, thisHealthChart> {
                 barBorderRadius={4}
                 spacing = {10}
               />
-            }
+            }            
           </PlatformTouchable>
+          <View style={{flex: 1, marginLeft: -60, paddingRight: 30}}>
+            <ProgressChart
+                data={progressData}
+                width={380}
+                height={200}
+                strokeWidth={16}
+                radius={32}
+                chartConfig={chartConfig}
+                hideLegend={false}
+              />
+          </View>
+          {/* <View>
+            <ContributionGraph 
+              values={commitsData}
+              endDate={new Date("2024-02-14")}
+              numDays={105}
+              width={380}
+              height={220}
+              chartConfig={chartConfig}
+              
+            />
+          </View> */}
         </View>
-        
-        
-        
-        
         <View style= {{margin: 20}} />
         {/* <PieChart 
           data = {amountActivity}
